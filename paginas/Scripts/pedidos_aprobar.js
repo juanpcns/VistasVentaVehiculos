@@ -9,7 +9,10 @@
             .then(resp => resp.json())
             .then(pedidos => {
                 pedidosCargados = pedidos;
-                const pendientes = pedidos.filter(p => p.Estado === "Pendiente");
+                const pendientes = pedidos.filter(p => {
+                    let estado = (p.Estado || p.estado || '').trim().toLowerCase();
+                    return estado === "pendiente";
+                });
                 renderizarTabla(pendientes);
             })
             .catch(() => {
@@ -26,28 +29,31 @@
             return;
         }
         pedidos.forEach(pedido => {
-            tbody.innerHTML += `
-                <tr>
-                    <td>${pedido.Id}</td>
-                    <td>${pedido.DocumentoCliente || '-'}</td>
-                    <td>${pedido.FechaPedido ? new Date(pedido.FechaPedido).toLocaleDateString() : '-'}</td>
-                    <td>${pedido.Observaciones || '-'}</td>
-                    <td>
-                        <button class="btn btn-info btn-sm" onclick="PedidosAprobarApp.verDetallePedido(
-                            '${pedido.Id}', 
-                            '${pedido.DocumentoCliente || ''}', 
-                            '${pedido.FechaPedido || ''}', 
-                            \`${pedido.Observaciones || ''}\`, 
-                            '${pedido.Estado || ''}'
-                        )">
-                            <i class="fa-solid fa-eye"></i> Ver Detalle
-                        </button>
-                        <button class="btn btn-success btn-sm" onclick="PedidosAprobarApp.aprobarPedido(${pedido.Id})">
-                            <i class="fa-solid fa-check"></i> Aprobar
-                        </button>
-                    </td>
-                </tr>
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${pedido.Id}</td>
+                <td>${pedido.DocumentoCliente || '-'}</td>
+                <td>${pedido.FechaPedido ? new Date(pedido.FechaPedido).toLocaleDateString() : '-'}</td>
+                <td>${pedido.Observaciones || '-'}</td>
+                <td>
+                    <button class="btn btn-info btn-sm" onclick="PedidosAprobarApp.verDetallePedido(
+                        '${pedido.Id}', 
+                        '${pedido.DocumentoCliente || ''}', 
+                        '${pedido.FechaPedido || ''}', 
+                        \`${pedido.Observaciones || ''}\`, 
+                        '${pedido.Estado || ''}'
+                    )">
+                        <i class="fa-solid fa-eye"></i> Ver Detalle
+                    </button>
+                    <button class="btn btn-success btn-sm ms-1" onclick="PedidosAprobarApp.cambiarEstadoPedido(${pedido.Id},'Aprobado')">
+                        <i class="fa-solid fa-check"></i> Aprobar
+                    </button>
+                    <button class="btn btn-danger btn-sm ms-1" onclick="PedidosAprobarApp.cambiarEstadoPedido(${pedido.Id},'Rechazado')">
+                        <i class="fa-solid fa-xmark"></i> Rechazar
+                    </button>
+                </td>
             `;
+            tbody.appendChild(row);
         });
     }
 
@@ -64,10 +70,16 @@
         myModal.show();
     }
 
-    function aprobarPedido(id) {
-        const pedido = pedidosCargados.find(p => p.Id === id);
+    function cambiarEstadoPedido(id, nuevoEstado) {
+        const pedido = pedidosCargados.find(p => p.Id == id);
         if (!pedido) return alert('Pedido no encontrado');
-        pedido.Estado = "Aprobado";
+
+        if (nuevoEstado === 'Rechazado' && !confirm("¿Seguro que deseas rechazar este pedido? Esta acción no se puede deshacer.")) {
+            return;
+        }
+
+        pedido.Estado = nuevoEstado;
+
         fetch(`${API_BASE}/Pedido/Actualizar`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -82,8 +94,8 @@
 
     return {
         cargarPedidosPendientes,
-        aprobarPedido,
-        verDetallePedido
+        verDetallePedido,
+        cambiarEstadoPedido
     };
 })();
 

@@ -166,7 +166,7 @@
         .hero-image img {
             max-width: 100%;
             border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
         }
 
         .features {
@@ -249,6 +249,9 @@
             </a>
             <a href="#" id="menu-aprobar-pedidos" onclick="cargarVista('aprobar_pedidos', this)">
                 <i class="fa-solid fa-check"></i> Aprobar Pedidos
+            </a>
+            <a href="#" id="menu-mis-pedidos" onclick="cargarVista('mis_pedidos', this)">
+                <i class="fa-solid fa-clipboard-list"></i> Mis Pedidos
             </a>
             <a href="#" id="menu-facturacion" onclick="cargarVista('facturacion', this)">
                 <i class="fa-solid fa-file-invoice-dollar"></i> Facturación
@@ -336,36 +339,36 @@
 
             if (vista === 'inicio') {
                 document.getElementById('contenido').innerHTML = `
-                                <h2 class="mt-4 mb-3 fw-bold">Bienvenido al sistema de Venta de Vehículos</h2>
-                                <p class="lead mb-4">Selecciona una opción en el menú.</p>
-                                <section class="hero">
-                                    <div class="hero-text">
-                                        <h1>Encuentra el vehículo de tus sueños</h1>
-                                        <p>Compra y vende autos fácilmente, al mejor precio y con seguridad garantizada.</p>
-                                        <a href="#" class="btn" onclick="cargarVista('vehiculos', document.getElementById('menu-vehiculos'));">Ver vehículos</a>
-                                    </div>
-                                    <div class="hero-image">
-                                        <img id="banner-img" src="Estilos/webfonts/BMW.jpg" alt="Vehículo destacado" style="max-width:100%;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,0.1);">
-                                    </div>
-                                </section>
-                                <section class="features">
-                                    <div class="feature">
-                                        <i class="fa-solid fa-tags"></i>
-                                        <h3>Los Mejores Precios</h3>
-                                        <p>Compara entre cientos de opciones y encuentra tu mejor oferta.</p>
-                                    </div>
-                                    <div class="feature">
-                                        <i class="fa-solid fa-shield-halved"></i>
-                                        <h3>Compra Segura</h3>
-                                        <p>Transacciones seguras con asesoramiento profesional.</p>
-                                    </div>
-                                    <div class="feature">
-                                        <i class="fa-solid fa-tools"></i>
-                                        <h3>Revisión Mecánica</h3>
-                                        <p>Vehículos inspeccionados y listos para conducir.</p>
-                                    </div>
-                                </section>
-                            `;
+                            <h2 class="mt-4 mb-3 fw-bold">Bienvenido al sistema de Venta de Vehículos</h2>
+                            <p class="lead mb-4">Selecciona una opción en el menú.</p>
+                            <section class="hero">
+                                <div class="hero-text">
+                                    <h1>Encuentra el vehículo de tus sueños</h1>
+                                    <p>Compra y vende autos fácilmente, al mejor precio y con seguridad garantizada.</p>
+                                    <a href="#" class="btn" onclick="cargarVista('vehiculos', document.getElementById('menu-vehiculos'));">Ver vehículos</a>
+                                </div>
+                                <div class="hero-image">
+                                    <img id="banner-img" src="Estilos/webfonts/BMW.jpg" alt="Vehículo destacado" style="max-width:100%;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,0.1);">
+                                </div>
+                            </section>
+                            <section class="features">
+                                <div class="feature">
+                                    <i class="fa-solid fa-tags"></i>
+                                    <h3>Los Mejores Precios</h3>
+                                    <p>Compara entre cientos de opciones y encuentra tu mejor oferta.</p>
+                                </div>
+                                <div class="feature">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                    <h3>Compra Segura</h3>
+                                    <p>Transacciones seguras con asesoramiento profesional.</p>
+                                </div>
+                                <div class="feature">
+                                    <i class="fa-solid fa-tools"></i>
+                                    <h3>Revisión Mecánica</h3>
+                                    <p>Vehículos inspeccionados y listos para conducir.</p>
+                                </div>
+                            </section>
+                        `;
             } else if (vista === 'vehiculos') {
                 fetch('vehiculos.html')
                     .then(r => r.text())
@@ -431,6 +434,18 @@
                         script.id = 'facturacion-script';
                         document.body.appendChild(script);
                     });
+            } else if (vista === 'mis_pedidos') {
+                fetch('mis_pedidos.html')
+                    .then(r => r.text())
+                    .then(html => {
+                        document.getElementById('contenido').innerHTML = html;
+                        let oldScript = document.getElementById('mis-pedidos-script');
+                        if (oldScript) oldScript.remove();
+                        var script = document.createElement('script');
+                        script.src = 'Scripts/mis_pedidos.js';
+                        script.id = 'mis-pedidos-script';
+                        document.body.appendChild(script);
+                    });
             } else if (vista === 'perfil') {
                 fetch('perfil.html')
                     .then(r => r.text())
@@ -445,8 +460,8 @@
                     });
             } else {
                 document.getElementById('contenido').innerHTML = `
-                                <div class="alert alert-secondary">Módulo en construcción (${vista})</div>
-                            `;
+                            <div class="alert alert-secondary">Módulo en construcción (${vista})</div>
+                        `;
             }
         }
     </script>

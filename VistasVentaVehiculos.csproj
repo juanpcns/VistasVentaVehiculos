@@ -159,6 +159,7 @@
     <Content Include="paginas\Login.html" />
     <Content Include="paginas\Menu.html" />
     <Content Include="paginas\MenuLateral.html" />
+    <Content Include="paginas\mis_pedidos.html" />
     <Content Include="paginas\Pagina1.html" />
     <Content Include="paginas\Pagina2.html" />
     <Content Include="paginas\PaginaBase.html" />
@@ -171,6 +172,7 @@
     <Content Include="paginas\Scripts\Login.js" />
     <Content Include="paginas\Scripts\Menu.js" />
     <Content Include="paginas\Scripts\MenuLateral.js" />
+    <Content Include="paginas\Scripts\mis_pedidos.js" />
     <Content Include="paginas\Scripts\Pagina1.js" />
     <Content Include="paginas\Scripts\Pagina2.js" />
     <Content Include="paginas\Scripts\Pedidos.js" />
