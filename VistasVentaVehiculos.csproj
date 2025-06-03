@@ -163,6 +163,8 @@
     <Content Include="paginas\Pagina1.html" />
     <Content Include="paginas\Pagina2.html" />
     <Content Include="paginas\PaginaBase.html" />
+    <Content Include="paginas\Pedidos.html" />
+    <Content Include="paginas\pedidos_aprobar.html" />
     <Content Include="paginas\Scripts\Comunes\Comunes.js" />
     <Content Include="paginas\Scripts\Comunes\CRUD.js" />
     <Content Include="paginas\Scripts\Login.js" />
@@ -170,6 +172,7 @@
     <Content Include="paginas\Scripts\MenuLateral.js" />
     <Content Include="paginas\Scripts\Pagina1.js" />
     <Content Include="paginas\Scripts\Pagina2.js" />
+    <Content Include="paginas\Scripts\Pedidos.js" />
     <Content Include="paginas\Scripts\vehiculos.js" />
     <Content Include="paginas\vehiculos.html" />
     <Content Include="Scripts\adminlte.js" />
@@ -302,6 +305,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Content Include="paginas\Scripts\pedidos_aprobar.js" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
@@ -312,12 +316,14 @@
     </Compile>
     <Compile Include="Site.Mobile.Master.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>

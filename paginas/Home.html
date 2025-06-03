@@ -168,8 +168,11 @@
             <a href="#" id="menu-vehiculos" onclick="cargarVista('vehiculos', this)">
                 <i class="fa-solid fa-car-side"></i> Vehículos
             </a>
-            <a href="#" id="menu-ventas" onclick="cargarVista('ventas', this)">
+            <a href="#" id="menu-ventas" onclick="cargarVista('pedidos', this)">
                 <i class="fa-solid fa-calendar-check"></i> Ventas
+            </a>
+            <a href="#" id="menu-aprobar-pedidos" onclick="cargarVista('aprobar_pedidos', this)">
+                <i class="fa-solid fa-check"></i> Aprobar Pedidos
             </a>
             <a href="#" id="menu-taller" onclick="cargarVista('taller', this)">
                 <i class="fa-solid fa-wrench"></i> Taller
@@ -214,32 +217,69 @@
 
             if (vista === 'inicio') {
                 document.getElementById('contenido').innerHTML = `
-                    <h2 class="mt-4 mb-3 fw-bold">Bienvenido al sistema de Venta de Vehículos</h2>
-                    <p class="lead mb-4">Selecciona una opción en el menú.</p>
-                `;
+                            <h2 class="mt-4 mb-3 fw-bold">Bienvenido al sistema de Venta de Vehículos</h2>
+                            <p class="lead mb-4">Selecciona una opción en el menú.</p>
+                        `;
             } else if (vista === 'vehiculos') {
-                fetch('vehiculos.html')  // AJUSTA la ruta según tu estructura de carpetas
+                fetch('vehiculos.html')
                     .then(r => r.text())
                     .then(html => {
                         document.getElementById('contenido').innerHTML = html;
-
-                        // ELIMINA EL SCRIPT ANTERIOR SI EXISTE
                         let oldScript = document.getElementById('vehiculos-script');
                         if (oldScript) oldScript.remove();
-
-                        // AGREGA EL SCRIPT NUEVO
                         var script = document.createElement('script');
-                        script.src = 'Scripts/Vehiculos.js';  // AJUSTA la ruta según tu estructura de carpetas
+                        script.src = 'Scripts/Vehiculos.js';
                         script.id = 'vehiculos-script';
                         script.onload = function () {
                             console.log('Vehiculos.js cargado y ejecutado');
                         };
                         document.body.appendChild(script);
                     });
+            } else if (vista === 'pedidos') {
+                fetch('pedidos.html')
+                    .then(r => r.text())
+                    .then(html => {
+                        document.getElementById('contenido').innerHTML = html;
+                        let oldScript = document.getElementById('pedidos-script');
+                        if (oldScript) oldScript.remove();
+                        var script = document.createElement('script');
+                        script.src = 'Scripts/Pedidos.js';
+                        script.id = 'pedidos-script';
+                        script.onload = function () {
+                            console.log('Pedidos.js cargado y ejecutado');
+                            setTimeout(function () {
+                                if (window.cargarVehiculos) {
+                                    window.cargarVehiculos();
+                                } else if (window.PedidosApp && window.PedidosApp.cargarVehiculos) {
+                                    window.PedidosApp.cargarVehiculos();
+                                }
+                            }, 100);
+                        };
+                        document.body.appendChild(script);
+                    });
+            } else if (vista === 'aprobar_pedidos') {
+                fetch('pedidos_aprobar.html')
+                    .then(r => r.text())
+                    .then(html => {
+                        document.getElementById('contenido').innerHTML = html;
+                        let oldScript = document.getElementById('pedidos-aprobar-script');
+                        if (oldScript) oldScript.remove();
+                        var script = document.createElement('script');
+                        script.src = 'Scripts/pedidos_aprobar.js'; // ← AQUÍ el nombre real
+                        script.id = 'pedidos-aprobar-script';
+                        script.onload = function () {
+                            console.log('pedidos_aprobar.js cargado y ejecutado');
+                            // <---- SOLUCIÓN AQUÍ ---->
+                            if (window.PedidosAprobarApp && typeof window.PedidosAprobarApp.cargarPedidosPendientes === 'function') {
+                                window.PedidosAprobarApp.cargarPedidosPendientes();
+                            }
+                        };
+                        document.body.appendChild(script);
+                    });
             } else {
                 document.getElementById('contenido').innerHTML = `
-                    <div class="alert alert-secondary">Módulo en construcción (${vista})</div>
-                `;
+                            <div class="alert alert-secondary">Módulo en construcción (${vista})</div>
+                        `;
             }
         }
     </script>
