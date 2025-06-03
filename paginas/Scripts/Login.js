@@ -31,9 +31,14 @@
             .addClass("alert alert-success")
             .html("Bienvenido, " + (Respuesta.Username || "") + "!");
 
-        // Aquí puedes guardar cookies o redirigir
-        // Por ejemplo:
-        // window.location.href = "/Home/Index";
+        // Guardar datos del usuario (opcional)
+        sessionStorage.setItem("usuario", JSON.stringify(Respuesta));
+
+        // Redirigir al Home
+        setTimeout(() => {
+            window.location.href = "Home.html";
+        }, 1000);
+
     } else {
         // Login fallido (credenciales inválidas, etc.)
         $("#dvMensaje")
