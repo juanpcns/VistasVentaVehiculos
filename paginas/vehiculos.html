@@ -1,0 +1,89 @@
+﻿<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0"><i class="fa-solid fa-car-side me-2"></i>Gestión de Vehículos</h2>
+    <button class="btn btn-primary" onclick="VehiculosApp.mostrarModalVehiculo()">
+        <i class="fa-solid fa-plus me-1"></i> Agregar Vehículo
+    </button>
+</div>
+<div class="table-responsive">
+    <table class="table table-hover align-middle" id="tablaVehiculos">
+        <thead class="table-light">
+            <tr>
+                <th>Código</th>
+                <th>IdModelo</th>
+                <th>Modelo</th>
+                <th>Año</th>
+                <th>Tipo</th>
+                <th>Valor Unitario</th>
+                <th>Estado</th>
+                <th>Origen</th>
+                <th>Condición</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Se llena dinámicamente -->
+        </tbody>
+    </table>
+</div>
+<!-- Modal para agregar/editar vehículo -->
+<div class="modal fade" id="modalVehiculo" tabindex="-1" aria-labelledby="modalVehiculoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form class="modal-content" onsubmit="VehiculosApp.guardarVehiculo(event)">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalVehiculoLabel">Agregar Vehículo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="vehiculoCodigo">
+                <div class="mb-3">
+                    <label class="form-label">IdModelo</label>
+                    <input type="number" class="form-control" id="vehiculoModelo" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Año</label>
+                    <input type="number" min="1900" max="2099" class="form-control" id="vehiculoAnio" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Tipo</label>
+                    <input type="text" class="form-control" id="vehiculoTipo" required>
+                </div>
+                <!-- CAMPO EDITABLE: Valor Unitario -->
+                <div class="mb-3">
+                    <label class="form-label">
+                        Valor Unitario
+                        <span class="badge bg-info text-dark ms-1">Editable</span>
+                    </label>
+                    <input type="number" min="0" class="form-control campo-editable" id="vehiculoValor" required>
+                </div>
+                <!-- CAMPO EDITABLE: Estado -->
+                <div class="mb-3">
+                    <label class="form-label">
+                        Estado
+                        <span class="badge bg-info text-dark ms-1">Editable</span>
+                    </label>
+                    <select class="form-select campo-editable" id="vehiculoEstado" required>
+                        <option value="Disponible">Disponible</option>
+                        <option value="Vendido">Vendido</option>
+                        <option value="Reservado">Reservado</option>
+                        <option value="Nuevo">Nuevo</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Origen</label>
+                    <input type="text" class="form-control" id="vehiculoOrigen" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Condición</label>
+                    <select class="form-select" id="vehiculoCondicion" required>
+                        <option value="Nuevo">Nuevo</option>
+                        <option value="Usado">Usado</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary" id="btnGuardarVehiculo">Guardar</button>
+            </div>
+        </form>
+    </div>
+</div>
