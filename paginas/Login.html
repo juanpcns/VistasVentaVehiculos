@@ -1,60 +1,88 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+<html lang="es">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Inicio App dllo WEB</title>
+    <title>Ingreso | Venta de Vehículos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="Estilos/adminlte.min.css" />
+    <style>
+        body {
+            background: #e6ecf2;
+            min-height: 100vh;
+        }
 
-    <!-- Google Font: Source Sans Pro -->
-    <!-- Font Awesome -->
-    <link href="Estilos/css/all.min.css" rel="stylesheet" />
-    <!-- Theme style -->
-    <link href="Estilos/adminlte.min.css" rel="stylesheet" />
+        .login-box {
+            width: 420px;
+            margin: 5% auto;
+        }
+
+        .login-logo h1 {
+            font-weight: 700;
+            color: #222e34;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .login-card-body {
+            padding: 32px;
+        }
+
+        .btn-primary {
+            background: #39a7f3;
+            border: none;
+            font-weight: 600;
+            border-radius: 6px;
+        }
+
+            .btn-primary:hover {
+                background: #2885c2;
+            }
+
+        #dvMensaje {
+            min-height: 28px;
+            margin-top: 12px;
+            font-size: 1rem;
+        }
+    </style>
 </head>
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <h1>APLICACIÓN</h1>
+            <h1>Venta de Vehículos</h1>
         </div>
-        <!-- /.login-logo -->
         <div class="card">
             <div class="card-body login-card-body">
-                <p class="login-box-msg">Ingresa usuario clave para iniciar</p>
-
-                <form>
+                <p class="login-box-msg">Ingresa tu usuario y clave para continuar</p>
+                <form id="loginForm" autocomplete="off">
                     <div class="input-group mb-3">
-                        <input type="text" id="txtUsername" class="form-control" placeholder="Usuario">
+                        <input type="text" id="txtUsername" class="form-control" placeholder="Usuario" autocomplete="username" autofocus>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-user"></span>
                             </div>
                         </div>
                     </div>
-                    <div class="input-group mb-3">
-                        <input type="password" id="txtClave" class="form-control" placeholder="Clave">
+                    <div class="input-group mb-4">
+                        <input type="password" id="txtClave" class="form-control" placeholder="Clave" autocomplete="current-password">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <button type="button" class="btn btn-primary btn-block" onclick="Ingresar()">INGRESAR</button>
-                        </div>
+                    <div>
+                        <button type="submit" class="btn btn-primary btn-block w-100">INGRESAR</button>
                     </div>
                 </form>
             </div>
             <div class="card-footer">
-                <div id="dvMensaje" class=""></div>
+                <div id="dvMensaje"></div>
             </div>
-            <!-- /.login-card-body -->
         </div>
     </div>
-    <!-- /.login-box -->
-    <script src="../Scripts/jquery-3.4.1.min.js"></script>
-    <script src="../Scripts/bootstrap.bundle.min.js"></script>
-    <script src="Scripts/Comunes/CRUD.js"></script>
+    <script src="Scripts/jquery-3.4.1.min.js"></script>
+    <script src="Scripts/bootstrap.bundle.min.js"></script>
     <script src="Scripts/Login.js"></script>
 </body>
 </html>
