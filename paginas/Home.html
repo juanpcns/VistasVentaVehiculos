@@ -153,6 +153,120 @@
                 padding-right: 12px;
             }
         }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+            color: #333;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: #202a2f;
+            color: white;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        nav a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+            nav a:hover {
+                color: #39a7f3;
+            }
+
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 60px 40px;
+            background: #fff;
+            flex-wrap: wrap;
+        }
+
+        .hero-text {
+            flex: 1;
+            max-width: 500px;
+        }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+                margin-bottom: 20px;
+            }
+
+            .hero-text p {
+                font-size: 1.1rem;
+                margin-bottom: 30px;
+            }
+
+        .btn {
+            padding: 12px 24px;
+            background-color: #39a7f3;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+            .btn:hover {
+                background-color: #2885c2;
+            }
+
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .features {
+            display: flex;
+            justify-content: space-around;
+            padding: 60px 40px;
+            background: #e9eef4;
+            flex-wrap: wrap;
+        }
+
+        .feature {
+            max-width: 300px;
+            text-align: center;
+            margin: 20px;
+        }
+
+            .feature i {
+                font-size: 2.5rem;
+                color: #39a7f3;
+                margin-bottom: 16px;
+            }
+
+            .feature h3 {
+                margin-bottom: 12px;
+                font-size: 1.4rem;
+            }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #202a2f;
+            color: white;
+        }
+
     </style>
 </head>
 <body>
@@ -168,7 +282,7 @@
             <a href="#" id="menu-vehiculos" onclick="cargarVista('vehiculos', this)">
                 <i class="fa-solid fa-car-side"></i> Vehículos
             </a>
-            <a href="#" id="menu-ventas" onclick="cargarVista('ventas', this)">
+            <a href="#" id="menu-ventas" onclick="cargarVista('pedidos', this)">
                 <i class="fa-solid fa-calendar-check"></i> Ventas
             </a>
             <a href="#" id="menu-taller" onclick="cargarVista('taller', this)">
@@ -179,6 +293,9 @@
             </a>
             <a href="#" id="menu-reportes" onclick="cargarVista('reportes', this)">
                 <i class="fa-solid fa-chart-bar"></i> Reportes
+            </a>
+            <a href="#" id="menu-reportes" onclick="cargarVista('perfil.html')">
+                <i class="fa-solid fa-user me-2"></i> Mi Perfil
             </a>
         </div>
         <div class="sidebar-footer text-center small">
@@ -191,15 +308,56 @@
         <div class="appbar">
             <span class="appbar-title"><i class="fa-solid fa-car-side"></i> Venta de Vehículos</span>
             <div>
-                <span class="usuario-nombre">Usuario</span>
-                <button class="btn btn-salir"><i class="fa-solid fa-right-from-bracket me-1"></i>Salir</button>
+                <div>
+                    <span class="usuario-nombre" id="lblUsuario">Cargando...</span>
+                    <button class="btn btn-salir" id="btnLogout">
+                        <i class="fa-solid fa-right-from-bracket me-1"></i>Salir
+                    </button>
+                    <button class="btn btn-primary d-none" id="btnLogin">
+                        <i class="fa-solid fa-right-to-bracket me-1"></i>Login
+                    </button>
+
+                </div>
+
             </div>
         </div>
         <!-- Contenido dinámico -->
         <div class="main-content" id="contenido">
             <h2 class="mt-4 mb-3 fw-bold">Bienvenido al sistema de Venta de Vehículos</h2>
             <p class="lead mb-4">Selecciona una opción en el menú.</p>
+
+            <section class="hero">
+                <div class="hero-text">
+                    <h1>Encuentra el vehículo de tus sueños</h1>
+                    <p>Compra y vende autos fácilmente, al mejor precio y con seguridad garantizada.</p>
+                    <a href="#" class="btn">Ver vehículos</a>
+                </div>
+                <div class="hero-image">
+                    <img id="banner-img" src="https://via.placeholder.com/600x300?text=Auto+1" alt="Vehículo destacado">
+                </div>
+            </section>
+
+            <section class="features">
+                <div class="feature">
+                    <i class="fa-solid fa-tags"></i>
+                    <h3>Los Mejores Precios</h3>
+                    <p>Compara entre cientos de opciones y encuentra tu mejor oferta.</p>
+                </div>
+                <div class="feature">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <h3>Compra Segura</h3>
+                    <p>Transacciones seguras con asesoramiento profesional.</p>
+                </div>
+                <div class="feature">
+                    <i class="fa-solid fa-tools"></i>
+                    <h3>Revisión Mecánica</h3>
+                    <p>Vehículos inspeccionados y listos para conducir.</p>
+                </div>
+            </section>
         </div>
+        <footer>
+            <p>&copy; 2024 AutoMarket. Todos los derechos reservados.</p>
+        </footer>
     </div>
     <script>
         // Cambia clase activa del menú
@@ -214,35 +372,112 @@
 
             if (vista === 'inicio') {
                 document.getElementById('contenido').innerHTML = `
-                    <h2 class="mt-4 mb-3 fw-bold">Bienvenido al sistema de Venta de Vehículos</h2>
-                    <p class="lead mb-4">Selecciona una opción en el menú.</p>
-                `;
+                            <h2 class="mt-4 mb-3 fw-bold">Bienvenido al sistema de Venta de Vehículos</h2>
+                            <p class="lead mb-4">Selecciona una opción en el menú.</p>
+                        `;
             } else if (vista === 'vehiculos') {
-                fetch('vehiculos.html')  // AJUSTA la ruta según tu estructura de carpetas
+                fetch('vehiculos.html')
                     .then(r => r.text())
                     .then(html => {
                         document.getElementById('contenido').innerHTML = html;
 
-                        // ELIMINA EL SCRIPT ANTERIOR SI EXISTE
                         let oldScript = document.getElementById('vehiculos-script');
                         if (oldScript) oldScript.remove();
 
-                        // AGREGA EL SCRIPT NUEVO
                         var script = document.createElement('script');
-                        script.src = 'Scripts/Vehiculos.js';  // AJUSTA la ruta según tu estructura de carpetas
+                        script.src = 'Scripts/Vehiculos.js';
                         script.id = 'vehiculos-script';
                         script.onload = function () {
                             console.log('Vehiculos.js cargado y ejecutado');
                         };
                         document.body.appendChild(script);
                     });
+            } else if (vista === 'pedidos') {
+                fetch('pedidos.html')
+                    .then(r => r.text())
+                    .then(html => {
+                        document.getElementById('contenido').innerHTML = html;
+
+                        let oldScript = document.getElementById('pedidos-script');
+                        if (oldScript) oldScript.remove();
+
+                        var script = document.createElement('script');
+                        script.src = 'Scripts/Pedidos.js';
+                        script.id = 'pedidos-script';
+                        script.onload = function () {
+                            console.log('Pedidos.js cargado y ejecutado');
+                            // IMPORTANTE: Llama a cargarVehiculos cuando el JS ya está disponible
+                            setTimeout(function () {
+                                if (window.cargarVehiculos) {
+                                    window.cargarVehiculos();
+                                } else if (window.PedidosApp && window.PedidosApp.cargarVehiculos) {
+                                    window.PedidosApp.cargarVehiculos();
+                                }
+                            }, 100);
+                        };
+                        document.body.appendChild(script);
+                    });
             } else {
                 document.getElementById('contenido').innerHTML = `
-                    <div class="alert alert-secondary">Módulo en construcción (${vista})</div>
-                `;
+                            <div class="alert alert-secondary">Módulo en construcción (${vista})</div>
+                        `;
             }
         }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    window.onload = function () {
+        const usuario = JSON.parse(sessionStorage.getItem("usuario"));
+
+        if (usuario && usuario.Username) {
+            document.getElementById("lblUsuario").textContent = usuario.Username;
+        } else {
+            document.getElementById("lblUsuario").textContent = "Invitado";
+        }
+    };
+</script>
+<script>
+    window.onload = function () {
+        const usuario = JSON.parse(sessionStorage.getItem("usuario"));
+        const lblUsuario = document.getElementById("lblUsuario");
+        const btnLogout = document.getElementById("btnLogout");
+        const btnLogin = document.getElementById("btnLogin");
+
+        if (usuario && usuario.Username) {
+            lblUsuario.textContent = usuario.Username;
+            btnLogout.classList.remove("d-none");
+            btnLogin.classList.add("d-none");
+        } else {
+            lblUsuario.textContent = "Invitado";
+            btnLogout.classList.add("d-none");
+            btnLogin.classList.remove("d-none");
+        }
+
+        btnLogout.addEventListener("click", () => {
+            sessionStorage.clear();
+            window.location.href = "Login.html";
+        });
+
+        btnLogin.addEventListener("click", () => {
+            window.location.href = "Login.html";
+        });
+    };
+
+</script>
+<script>
+    const banners = [
+        "https://via.placeholder.com/600x300?text=Auto+1",
+        "https://via.placeholder.com/600x300?text=Auto+2",
+        "https://via.placeholder.com/600x300?text=Auto+3"
+    ];
+
+    let index = 0;
+    const bannerImg = document.getElementById("banner-img");
+
+    setInterval(() => {
+        index = (index + 1) % banners.length;
+        bannerImg.src = banners[index];
+    }, 4000); // cambia cada 4 segundos
+</script>
 </body>
-</html>
+</html >

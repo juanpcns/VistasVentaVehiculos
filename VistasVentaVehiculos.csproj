@@ -153,6 +153,7 @@
     <Content Include="paginas\Estilos\styles.css" />
     <Content Include="paginas\Estilos\tempusdominus-bootstrap-4.css" />
     <Content Include="paginas\Estilos\tempusdominus-bootstrap-4.min.css" />
+    <Content Include="paginas\Estilos\webfonts\BMW.jpg" />
     <Content Include="paginas\Estilos\webfonts\fa-brands-400.svg" />
     <Content Include="paginas\Estilos\webfonts\fa-regular-400.svg" />
     <Content Include="paginas\Estilos\webfonts\fa-solid-900.svg" />
@@ -163,6 +164,7 @@
     <Content Include="paginas\Pagina1.html" />
     <Content Include="paginas\Pagina2.html" />
     <Content Include="paginas\PaginaBase.html" />
+    <Content Include="paginas\perfil.html" />
     <Content Include="paginas\Scripts\Comunes\Comunes.js" />
     <Content Include="paginas\Scripts\Comunes\CRUD.js" />
     <Content Include="paginas\Scripts\Login.js" />
@@ -170,6 +172,7 @@
     <Content Include="paginas\Scripts\MenuLateral.js" />
     <Content Include="paginas\Scripts\Pagina1.js" />
     <Content Include="paginas\Scripts\Pagina2.js" />
+    <Content Include="paginas\Scripts\Perfil.js" />
     <Content Include="paginas\Scripts\vehiculos.js" />
     <Content Include="paginas\vehiculos.html" />
     <Content Include="Scripts\adminlte.js" />
