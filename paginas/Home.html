@@ -125,72 +125,6 @@
             min-height: calc(100vh - 62px);
         }
 
-        @media (max-width: 991px) {
-            .sidebar {
-                min-width: 100px;
-                width: 100px;
-            }
-
-            .main-wrapper {
-                margin-left: 100px;
-            }
-        }
-
-        @media (max-width: 700px) {
-            .sidebar {
-                position: relative;
-                min-width: 100vw;
-                width: 100vw;
-                height: auto;
-            }
-
-            .main-wrapper {
-                margin-left: 0;
-            }
-
-            .appbar {
-                padding-left: 12px;
-                padding-right: 12px;
-            }
-        }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        body {
-            background: #f4f6f9;
-            color: #333;
-        }
-
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 40px;
-            background-color: #202a2f;
-            color: white;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        nav a {
-            margin-left: 20px;
-            text-decoration: none;
-            color: white;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-            nav a:hover {
-                color: #39a7f3;
-            }
-
         .hero {
             display: flex;
             justify-content: space-between;
@@ -267,6 +201,34 @@
             color: white;
         }
 
+        @media (max-width: 991px) {
+            .sidebar {
+                min-width: 100px;
+                width: 100px;
+            }
+
+            .main-wrapper {
+                margin-left: 100px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .sidebar {
+                position: relative;
+                min-width: 100vw;
+                width: 100vw;
+                height: auto;
+            }
+
+            .main-wrapper {
+                margin-left: 0;
+            }
+
+            .appbar {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -285,6 +247,12 @@
             <a href="#" id="menu-ventas" onclick="cargarVista('pedidos', this)">
                 <i class="fa-solid fa-calendar-check"></i> Ventas
             </a>
+            <a href="#" id="menu-aprobar-pedidos" onclick="cargarVista('aprobar_pedidos', this)">
+                <i class="fa-solid fa-check"></i> Aprobar Pedidos
+            </a>
+            <a href="#" id="menu-facturacion" onclick="cargarVista('facturacion', this)">
+                <i class="fa-solid fa-file-invoice-dollar"></i> Facturación
+            </a>
             <a href="#" id="menu-taller" onclick="cargarVista('taller', this)">
                 <i class="fa-solid fa-wrench"></i> Taller
             </a>
@@ -294,7 +262,7 @@
             <a href="#" id="menu-reportes" onclick="cargarVista('reportes', this)">
                 <i class="fa-solid fa-chart-bar"></i> Reportes
             </a>
-            <a href="#" id="menu-reportes" onclick="cargarVista('perfil.html')">
+            <a href="#" id="menu-perfil" onclick="cargarVista('perfil', this)">
                 <i class="fa-solid fa-user me-2"></i> Mi Perfil
             </a>
         </div>
@@ -316,27 +284,23 @@
                     <button class="btn btn-primary d-none" id="btnLogin">
                         <i class="fa-solid fa-right-to-bracket me-1"></i>Login
                     </button>
-
                 </div>
-
             </div>
         </div>
         <!-- Contenido dinámico -->
         <div class="main-content" id="contenido">
             <h2 class="mt-4 mb-3 fw-bold">Bienvenido al sistema de Venta de Vehículos</h2>
             <p class="lead mb-4">Selecciona una opción en el menú.</p>
-
             <section class="hero">
                 <div class="hero-text">
                     <h1>Encuentra el vehículo de tus sueños</h1>
                     <p>Compra y vende autos fácilmente, al mejor precio y con seguridad garantizada.</p>
-                    <a href="#" class="btn">Ver vehículos</a>
+                    <a href="#" class="btn" onclick="cargarVista('vehiculos', document.getElementById('menu-vehiculos'));">Ver vehículos</a>
                 </div>
                 <div class="hero-image">
-                    <img id="banner-img" src="https://via.placeholder.com/600x300?text=Auto+1" alt="Vehículo destacado">
+                    <img id="banner-img" src="Estilos/webfonts/BMW.jpg" alt="Vehículo destacado" style="max-width:100%;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,0.1);">
                 </div>
             </section>
-
             <section class="features">
                 <div class="feature">
                     <i class="fa-solid fa-tags"></i>
@@ -368,22 +332,47 @@
 
         // Carga la vista según el menú
         function cargarVista(vista, link) {
-            setActiveMenu(link);
+            if (link) setActiveMenu(link);
 
             if (vista === 'inicio') {
                 document.getElementById('contenido').innerHTML = `
-                            <h2 class="mt-4 mb-3 fw-bold">Bienvenido al sistema de Venta de Vehículos</h2>
-                            <p class="lead mb-4">Selecciona una opción en el menú.</p>
-                        `;
+                                <h2 class="mt-4 mb-3 fw-bold">Bienvenido al sistema de Venta de Vehículos</h2>
+                                <p class="lead mb-4">Selecciona una opción en el menú.</p>
+                                <section class="hero">
+                                    <div class="hero-text">
+                                        <h1>Encuentra el vehículo de tus sueños</h1>
+                                        <p>Compra y vende autos fácilmente, al mejor precio y con seguridad garantizada.</p>
+                                        <a href="#" class="btn" onclick="cargarVista('vehiculos', document.getElementById('menu-vehiculos'));">Ver vehículos</a>
+                                    </div>
+                                    <div class="hero-image">
+                                        <img id="banner-img" src="Estilos/webfonts/BMW.jpg" alt="Vehículo destacado" style="max-width:100%;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,0.1);">
+                                    </div>
+                                </section>
+                                <section class="features">
+                                    <div class="feature">
+                                        <i class="fa-solid fa-tags"></i>
+                                        <h3>Los Mejores Precios</h3>
+                                        <p>Compara entre cientos de opciones y encuentra tu mejor oferta.</p>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fa-solid fa-shield-halved"></i>
+                                        <h3>Compra Segura</h3>
+                                        <p>Transacciones seguras con asesoramiento profesional.</p>
+                                    </div>
+                                    <div class="feature">
+                                        <i class="fa-solid fa-tools"></i>
+                                        <h3>Revisión Mecánica</h3>
+                                        <p>Vehículos inspeccionados y listos para conducir.</p>
+                                    </div>
+                                </section>
+                            `;
             } else if (vista === 'vehiculos') {
                 fetch('vehiculos.html')
                     .then(r => r.text())
                     .then(html => {
                         document.getElementById('contenido').innerHTML = html;
-
                         let oldScript = document.getElementById('vehiculos-script');
                         if (oldScript) oldScript.remove();
-
                         var script = document.createElement('script');
                         script.src = 'Scripts/Vehiculos.js';
                         script.id = 'vehiculos-script';
@@ -397,16 +386,12 @@
                     .then(r => r.text())
                     .then(html => {
                         document.getElementById('contenido').innerHTML = html;
-
                         let oldScript = document.getElementById('pedidos-script');
                         if (oldScript) oldScript.remove();
-
                         var script = document.createElement('script');
                         script.src = 'Scripts/Pedidos.js';
                         script.id = 'pedidos-script';
                         script.onload = function () {
-                            console.log('Pedidos.js cargado y ejecutado');
-                            // IMPORTANTE: Llama a cargarVehiculos cuando el JS ya está disponible
                             setTimeout(function () {
                                 if (window.cargarVehiculos) {
                                     window.cargarVehiculos();
@@ -417,67 +402,78 @@
                         };
                         document.body.appendChild(script);
                     });
+            } else if (vista === 'aprobar_pedidos') {
+                fetch('pedidos_aprobar.html')
+                    .then(r => r.text())
+                    .then(html => {
+                        document.getElementById('contenido').innerHTML = html;
+                        let oldScript = document.getElementById('pedidos-aprobar-script');
+                        if (oldScript) oldScript.remove();
+                        var script = document.createElement('script');
+                        script.src = 'Scripts/pedidos_aprobar.js';
+                        script.id = 'pedidos-aprobar-script';
+                        script.onload = function () {
+                            if (window.PedidosAprobarApp && typeof window.PedidosAprobarApp.cargarPedidosPendientes === 'function') {
+                                window.PedidosAprobarApp.cargarPedidosPendientes();
+                            }
+                        };
+                        document.body.appendChild(script);
+                    });
+            } else if (vista === 'facturacion') {
+                fetch('facturacion.html')
+                    .then(r => r.text())
+                    .then(html => {
+                        document.getElementById('contenido').innerHTML = html;
+                        let oldScript = document.getElementById('facturacion-script');
+                        if (oldScript) oldScript.remove();
+                        var script = document.createElement('script');
+                        script.src = 'Scripts/Facturacion.js';
+                        script.id = 'facturacion-script';
+                        document.body.appendChild(script);
+                    });
+            } else if (vista === 'perfil') {
+                fetch('perfil.html')
+                    .then(r => r.text())
+                    .then(html => {
+                        document.getElementById('contenido').innerHTML = html;
+                        let oldScript = document.getElementById('perfil-script');
+                        if (oldScript) oldScript.remove();
+                        var script = document.createElement('script');
+                        script.src = 'Scripts/Perfil.js';
+                        script.id = 'perfil-script';
+                        document.body.appendChild(script);
+                    });
             } else {
                 document.getElementById('contenido').innerHTML = `
-                            <div class="alert alert-secondary">Módulo en construcción (${vista})</div>
-                        `;
+                                <div class="alert alert-secondary">Módulo en construcción (${vista})</div>
+                            `;
             }
         }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    window.onload = function () {
-        const usuario = JSON.parse(sessionStorage.getItem("usuario"));
-
-        if (usuario && usuario.Username) {
-            document.getElementById("lblUsuario").textContent = usuario.Username;
-        } else {
-            document.getElementById("lblUsuario").textContent = "Invitado";
-        }
-    };
-</script>
-<script>
-    window.onload = function () {
-        const usuario = JSON.parse(sessionStorage.getItem("usuario"));
-        const lblUsuario = document.getElementById("lblUsuario");
-        const btnLogout = document.getElementById("btnLogout");
-        const btnLogin = document.getElementById("btnLogin");
-
-        if (usuario && usuario.Username) {
-            lblUsuario.textContent = usuario.Username;
-            btnLogout.classList.remove("d-none");
-            btnLogin.classList.add("d-none");
-        } else {
-            lblUsuario.textContent = "Invitado";
-            btnLogout.classList.add("d-none");
-            btnLogin.classList.remove("d-none");
-        }
-
-        btnLogout.addEventListener("click", () => {
-            sessionStorage.clear();
-            window.location.href = "Login.html";
-        });
-
-        btnLogin.addEventListener("click", () => {
-            window.location.href = "Login.html";
-        });
-    };
-
-</script>
-<script>
-    const banners = [
-        "https://via.placeholder.com/600x300?text=Auto+1",
-        "https://via.placeholder.com/600x300?text=Auto+2",
-        "https://via.placeholder.com/600x300?text=Auto+3"
-    ];
-
-    let index = 0;
-    const bannerImg = document.getElementById("banner-img");
-
-    setInterval(() => {
-        index = (index + 1) % banners.length;
-        bannerImg.src = banners[index];
-    }, 4000); // cambia cada 4 segundos
-</script>
+    <script>
+        window.onload = function () {
+            const usuario = JSON.parse(sessionStorage.getItem("usuario"));
+            const lblUsuario = document.getElementById("lblUsuario");
+            const btnLogout = document.getElementById("btnLogout");
+            const btnLogin = document.getElementById("btnLogin");
+            if (usuario && usuario.Username) {
+                lblUsuario.textContent = usuario.Username;
+                btnLogout.classList.remove("d-none");
+                btnLogin.classList.add("d-none");
+            } else {
+                lblUsuario.textContent = "Invitado";
+                btnLogout.classList.add("d-none");
+                btnLogin.classList.remove("d-none");
+            }
+            btnLogout.addEventListener("click", () => {
+                sessionStorage.clear();
+                window.location.href = "Login.html";
+            });
+            btnLogin.addEventListener("click", () => {
+                window.location.href = "Login.html";
+            });
+        };
+    </script>
 </body>
-</html >
+</html>

@@ -154,6 +154,7 @@
     <Content Include="paginas\Estilos\webfonts\fa-brands-400.svg" />
     <Content Include="paginas\Estilos\webfonts\fa-regular-400.svg" />
     <Content Include="paginas\Estilos\webfonts\fa-solid-900.svg" />
+    <Content Include="paginas\facturacion.html" />
     <Content Include="paginas\Home.html" />
     <Content Include="paginas\Login.html" />
     <Content Include="paginas\Menu.html" />
@@ -166,6 +167,7 @@
     <Content Include="paginas\perfil.html" />
     <Content Include="paginas\Scripts\Comunes\Comunes.js" />
     <Content Include="paginas\Scripts\Comunes\CRUD.js" />
+    <Content Include="paginas\Scripts\facturacion.js" />
     <Content Include="paginas\Scripts\Login.js" />
     <Content Include="paginas\Scripts\Menu.js" />
     <Content Include="paginas\Scripts\MenuLateral.js" />

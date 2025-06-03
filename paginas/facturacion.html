@@ -1,0 +1,77 @@
+﻿<div class="mb-4">
+    <h2 class="fw-bold"><i class="fa-solid fa-file-invoice-dollar"></i> Facturación de Pedidos</h2>
+</div>
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label for="docCliente" class="form-label">Documento del Cliente</label>
+        <input type="text" class="form-control" id="docCliente" placeholder="Ingrese documento cliente">
+    </div>
+    <div class="col-md-6 mb-3">
+        <label for="docVendedor" class="form-label">Documento del Vendedor</label>
+        <input type="text" class="form-control" id="docVendedor" placeholder="Ingrese documento vendedor">
+    </div>
+</div>
+<div class="mb-3">
+    <button class="btn btn-primary" onclick="FacturacionApp.buscarPedidosAprobados()">Buscar Pedidos Aprobados</button>
+</div>
+<div id="pedidosAprobadosContainer" style="display:none;">
+    <h5 class="mb-2">Pedidos Aprobados:</h5>
+    <table class="table table-bordered align-middle" id="tablaPedidosAprobados">
+        <thead class="table-light">
+            <tr>
+                <th>ID Pedido</th>
+                <th>Fecha Pedido</th>
+                <th>Estado</th>
+                <th>Observaciones</th>
+                <th>Seleccionar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- JS -->
+        </tbody>
+    </table>
+</div>
+<div class="mb-3" id="btnGenerarFacturaContainer" style="display:none;">
+    <button class="btn btn-success" onclick="FacturacionApp.generarFacturaSeleccionada()">Generar Factura</button>
+</div>
+<hr>
+<div class="mb-4">
+    <h2 class="fw-bold"><i class="fa-solid fa-clock-rotate-left"></i> Historial de Compras del Cliente</h2>
+    <button class="btn btn-secondary mb-2" onclick="FacturacionApp.consultarHistorial()">Mostrar historial</button>
+    <div id="historialComprasContainer" style="display:none;">
+        <table class="table table-striped" id="tablaHistorialCompras">
+            <thead>
+                <tr>
+                    <th>N° Factura</th>
+                    <th>Fecha</th>
+                    <th>Código Vehículo</th>
+                    <th>Cantidad</th>
+                    <th>Valor Unitario</th>
+                    <th>Total</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- JS -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal Detalle Factura -->
+<div class="modal fade" id="modalDetalleFactura" tabindex="-1" aria-labelledby="detalleFacturaLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detalleFacturaLabel">Detalle de Factura</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body" id="detalleFacturaBody">
+                <!-- Detalle se llena por JS -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

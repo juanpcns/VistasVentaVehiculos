@@ -3,36 +3,18 @@
     let pedidosCargados = [];
 
     function cargarPedidosPendientes() {
-        console.log("Iniciando carga de pedidos...");
         fetch(`${API_BASE}/Pedido/ConsultarTodos`, {
             headers: { 'Accept': 'application/json' }
         })
             .then(resp => resp.json())
             .then(pedidos => {
-                console.log("Pedidos recibidos:", pedidos); // Depuración
-                if (!Array.isArray(pedidos)) {
-                    console.error("Respuesta inesperada, no es array:", pedidos);
-                }
                 pedidosCargados = pedidos;
-
-                // Log extra para ver los estados
-                pedidos.forEach(p => {
-                    console.log(`Pedido ${p.Id}: Estado='${p.Estado}'`);
-                });
-
-                // Ajuste: filtro más tolerante a mayúsculas/minúsculas/espacios
-                const pendientes = pedidos.filter(
-                    p => typeof p.Estado === 'string' && p.Estado.trim().toLowerCase() === 'pendiente'
-                );
-                console.log("Pedidos pendientes filtrados:", pendientes);
-
+                const pendientes = pedidos.filter(p => p.Estado === "Pendiente");
                 renderizarTabla(pendientes);
             })
-            .catch((err) => {
-                console.error("Error en el fetch:", err);
-                const tbody = document.querySelector('#tablaPedidosPendientes tbody');
-                if (tbody)
-                    tbody.innerHTML = '<tr><td colspan="5" class="text-center text-danger">Error cargando pedidos.</td></tr>';
+            .catch(() => {
+                document.querySelector('#tablaPedidosPendientes tbody').innerHTML =
+                    '<tr><td colspan="5" class="text-center text-danger">Error cargando pedidos.</td></tr>';
             });
     }
 
@@ -51,6 +33,15 @@
                     <td>${pedido.FechaPedido ? new Date(pedido.FechaPedido).toLocaleDateString() : '-'}</td>
                     <td>${pedido.Observaciones || '-'}</td>
                     <td>
+                        <button class="btn btn-info btn-sm" onclick="PedidosAprobarApp.verDetallePedido(
+                            '${pedido.Id}', 
+                            '${pedido.DocumentoCliente || ''}', 
+                            '${pedido.FechaPedido || ''}', 
+                            \`${pedido.Observaciones || ''}\`, 
+                            '${pedido.Estado || ''}'
+                        )">
+                            <i class="fa-solid fa-eye"></i> Ver Detalle
+                        </button>
                         <button class="btn btn-success btn-sm" onclick="PedidosAprobarApp.aprobarPedido(${pedido.Id})">
                             <i class="fa-solid fa-check"></i> Aprobar
                         </button>
@@ -58,6 +49,19 @@
                 </tr>
             `;
         });
+    }
+
+    function verDetallePedido(id, docCliente, fecha, observaciones, estado) {
+        let html = `
+            <strong>ID Pedido:</strong> ${id}<br>
+            <strong>Documento Cliente:</strong> ${docCliente}<br>
+            <strong>Fecha de Pedido:</strong> ${fecha ? new Date(fecha).toLocaleString() : '-'}<br>
+            <strong>Estado:</strong> ${estado}<br>
+            <strong>Observaciones:</strong> ${observaciones}<br>
+        `;
+        document.getElementById('detallePedidoBody').innerHTML = html;
+        var myModal = new bootstrap.Modal(document.getElementById('modalDetallePedido'));
+        myModal.show();
     }
 
     function aprobarPedido(id) {
@@ -78,7 +82,8 @@
 
     return {
         cargarPedidosPendientes,
-        aprobarPedido
+        aprobarPedido,
+        verDetallePedido
     };
 })();
 
