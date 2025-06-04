@@ -5,231 +5,7 @@
     <title>Venta de Vehículos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <style>
-        body, html {
-            height: 100%;
-            margin: 0;
-            background: #f3f5f8;
-            color: #222;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .sidebar {
-            height: 100vh;
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 250px;
-            background: #222e34;
-            color: #bfcad9;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .sidebar-header {
-            padding: 24px 24px 8px 24px;
-            font-size: 2rem;
-            color: #fff;
-            font-weight: 700;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .sidebar-menu {
-            flex: 1;
-            padding: 12px 0;
-        }
-
-            .sidebar-menu a {
-                display: flex;
-                align-items: center;
-                padding: 14px 30px;
-                color: #bfcad9;
-                text-decoration: none;
-                font-size: 1.15rem;
-                border-left: 3px solid transparent;
-                transition: background 0.15s, color 0.15s;
-                gap: 12px;
-            }
-
-                .sidebar-menu a.active, .sidebar-menu a:hover {
-                    background: #192127;
-                    color: #fff;
-                    border-left: 3px solid #39a7f3;
-                }
-
-                .sidebar-menu a i {
-                    width: 22px;
-                    text-align: center;
-                }
-
-        .sidebar-footer {
-            padding: 18px 24px;
-            color: #bfcad9;
-            font-size: 1rem;
-            border-top: 1px solid #2d3a43;
-        }
-
-        .main-wrapper {
-            margin-left: 250px;
-            min-height: 100vh;
-            background: #f3f5f8;
-        }
-
-        .appbar {
-            height: 62px;
-            background: #202a2f;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 32px 0 32px;
-            color: #fff;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-        }
-
-        .appbar-title {
-            font-size: 1.55rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .usuario-nombre {
-            font-size: 1.17rem;
-            font-weight: 500;
-            margin-right: 18px;
-        }
-
-        .btn-salir {
-            background: #e04a59;
-            color: #fff;
-            font-weight: 600;
-            border: none;
-            border-radius: 7px;
-            padding: 5px 16px 5px 12px;
-            transition: background 0.2s;
-        }
-
-            .btn-salir:hover {
-                background: #c73948;
-            }
-
-        .main-content {
-            padding: 2.5rem 2rem 2rem 2rem;
-            background: #f3f5f8;
-            min-height: calc(100vh - 62px);
-        }
-
-        .hero {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 60px 40px;
-            background: #fff;
-            flex-wrap: wrap;
-        }
-
-        .hero-text {
-            flex: 1;
-            max-width: 500px;
-        }
-
-            .hero-text h1 {
-                font-size: 2.5rem;
-                margin-bottom: 20px;
-            }
-
-            .hero-text p {
-                font-size: 1.1rem;
-                margin-bottom: 30px;
-            }
-
-        .btn {
-            padding: 12px 24px;
-            background-color: #39a7f3;
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            border-radius: 8px;
-            transition: background-color 0.3s;
-        }
-
-            .btn:hover {
-                background-color: #2885c2;
-            }
-
-        .hero-image img {
-            max-width: 100%;
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        }
-
-        .features {
-            display: flex;
-            justify-content: space-around;
-            padding: 60px 40px;
-            background: #e9eef4;
-            flex-wrap: wrap;
-        }
-
-        .feature {
-            max-width: 300px;
-            text-align: center;
-            margin: 20px;
-        }
-
-            .feature i {
-                font-size: 2.5rem;
-                color: #39a7f3;
-                margin-bottom: 16px;
-            }
-
-            .feature h3 {
-                margin-bottom: 12px;
-                font-size: 1.4rem;
-            }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            background: #202a2f;
-            color: white;
-        }
-
-        @media (max-width: 991px) {
-            .sidebar {
-                min-width: 100px;
-                width: 100px;
-            }
-
-            .main-wrapper {
-                margin-left: 100px;
-            }
-        }
-
-        @media (max-width: 700px) {
-            .sidebar {
-                position: relative;
-                min-width: 100vw;
-                width: 100vw;
-                height: auto;
-            }
-
-            .main-wrapper {
-                margin-left: 0;
-            }
-
-            .appbar {
-                padding-left: 12px;
-                padding-right: 12px;
-            }
-        }
-    </style>
+    <link href="Estilos/css/estilos.css" rel="stylesheet" />
 </head>
 <body>
     <!-- Sidebar -->
@@ -247,266 +23,49 @@
             <a href="#" id="menu-ventas" onclick="cargarVista('pedidos', this)">
                 <i class="fa-solid fa-calendar-check"></i> Ventas
             </a>
-            <a href="#" id="menu-aprobar-pedidos" onclick="cargarVista('aprobar_pedidos', this)">
+            <a href="#" id="menu-aprobar-pedidos" onclick="cargarVista('pedidos_aprobar', this)">
                 <i class="fa-solid fa-check"></i> Aprobar Pedidos
             </a>
             <a href="#" id="menu-mis-pedidos" onclick="cargarVista('mis_pedidos', this)">
                 <i class="fa-solid fa-clipboard-list"></i> Mis Pedidos
             </a>
-            <a href="#" id="menu-facturacion" onclick="cargarVista('facturacion', this)">
-                <i class="fa-solid fa-file-invoice-dollar"></i> Facturación
-            </a>
-            <a href="#" id="menu-taller" onclick="cargarVista('taller', this)">
+            <a href="#" id="menu-taller" onclick="cargarVista('citaTaller', this)">
                 <i class="fa-solid fa-wrench"></i> Taller
             </a>
+            <a href="#" id="menu-garantia" onclick="cargarVista('garantia', this)">
+                <i class="fa-solid fa-shield-halved"></i> Garantías
+            </a>
+            <a href="#" id="menu-citas-aprobar" onclick="cargarVista('citas_aprobar', this)">
+                <i class="fa-solid fa-calendar-check"></i> Aprobar Citas Taller
+            </a>
+
             <a href="#" id="menu-usuarios" onclick="cargarVista('usuarios', this)">
                 <i class="fa-solid fa-users"></i> Usuarios
-            </a>
-            <a href="#" id="menu-reportes" onclick="cargarVista('reportes', this)">
-                <i class="fa-solid fa-chart-bar"></i> Reportes
-            </a>
-            <a href="#" id="menu-cita-taller" onclick="cargarVista('citaTaller', this)">
-                <i class="fa-solid fa-calendar-plus"></i> Cita Taller
             </a>
             <a href="#" id="menu-perfil" onclick="cargarVista('perfil', this)">
                 <i class="fa-solid fa-user me-2"></i> Mi Perfil
             </a>
         </div>
-        <div class="sidebar-footer text-center small">
-            © 2024 TuEmpresa
-        </div>
+        <div class="sidebar-footer text-center small">© 2025 OnePieceForever</div>
     </div>
-    <!-- Main Wrapper -->
+
+    <!-- Contenedor principal -->
     <div class="main-wrapper">
-        <!-- Appbar -->
         <div class="appbar">
             <span class="appbar-title"><i class="fa-solid fa-car-side"></i> Venta de Vehículos</span>
             <div>
-                <div>
-                    <span class="usuario-nombre" id="lblUsuario">Cargando...</span>
-                    <button class="btn btn-salir" id="btnLogout">
-                        <i class="fa-solid fa-right-from-bracket me-1"></i>Salir
-                    </button>
-                    <button class="btn btn-primary d-none" id="btnLogin">
-                        <i class="fa-solid fa-right-to-bracket me-1"></i>Login
-                    </button>
-                </div>
+                <span class="usuario-nombre" id="lblUsuario">Cargando...</span>
+                <button class="btn btn-salir" id="btnLogout">
+                    <i class="fa-solid fa-right-from-bracket me-1"></i>Salir
+                </button>
             </div>
         </div>
-        <!-- Contenido dinámico -->
-        <div class="main-content" id="contenido">
-            <h2 class="mt-4 mb-3 fw-bold">Bienvenido al sistema de Venta de Vehículos</h2>
-            <p class="lead mb-4">Selecciona una opción en el menú.</p>
-            <section class="hero">
-                <div class="hero-text">
-                    <h1>Encuentra el vehículo de tus sueños</h1>
-                    <p>Compra y vende autos fácilmente, al mejor precio y con seguridad garantizada.</p>
-                    <a href="#" class="btn" onclick="cargarVista('vehiculos', document.getElementById('menu-vehiculos'));">Ver vehículos</a>
-                </div>
-                <div class="hero-image">
-                    <img id="banner-img" src="Estilos/webfonts/BMW.jpg" alt="Vehículo destacado" style="max-width:100%;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,0.1);">
-                </div>
-            </section>
-            <section class="features">
-                <div class="feature">
-                    <i class="fa-solid fa-tags"></i>
-                    <h3>Los Mejores Precios</h3>
-                    <p>Compara entre cientos de opciones y encuentra tu mejor oferta.</p>
-                </div>
-                <div class="feature">
-                    <i class="fa-solid fa-shield-halved"></i>
-                    <h3>Compra Segura</h3>
-                    <p>Transacciones seguras con asesoramiento profesional.</p>
-                </div>
-                <div class="feature">
-                    <i class="fa-solid fa-tools"></i>
-                    <h3>Revisión Mecánica</h3>
-                    <p>Vehículos inspeccionados y listos para conducir.</p>
-                </div>
-            </section>
-        </div>
-        <footer>
-            <p>&copy; 2024 AutoMarket. Todos los derechos reservados.</p>
-        </footer>
+        <div class="main-content" id="contenido"></div>
+        <footer class="text-center bg-dark text-white py-3">© 2025 OnePieceForevert</footer>
     </div>
-    <script>
-        // Cambia clase activa del menú
-        function setActiveMenu(link) {
-            document.querySelectorAll('.sidebar-menu a').forEach(a => a.classList.remove('active'));
-            link.classList.add('active');
-        }
 
-        // Carga la vista según el menú
-        function cargarVista(vista, link) {
-            if (link) setActiveMenu(link);
-
-            if (vista === 'inicio') {
-                document.getElementById('contenido').innerHTML = `
-                            <h2 class="mt-4 mb-3 fw-bold">Bienvenido al sistema de Venta de Vehículos</h2>
-                            <p class="lead mb-4">Selecciona una opción en el menú.</p>
-                            <section class="hero">
-                                <div class="hero-text">
-                                    <h1>Encuentra el vehículo de tus sueños</h1>
-                                    <p>Compra y vende autos fácilmente, al mejor precio y con seguridad garantizada.</p>
-                                    <a href="#" class="btn" onclick="cargarVista('vehiculos', document.getElementById('menu-vehiculos'));">Ver vehículos</a>
-                                </div>
-                                <div class="hero-image">
-                                    <img id="banner-img" src="Estilos/webfonts/BMW.jpg" alt="Vehículo destacado" style="max-width:100%;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,0.1);">
-                                </div>
-                            </section>
-                            <section class="features">
-                                <div class="feature">
-                                    <i class="fa-solid fa-tags"></i>
-                                    <h3>Los Mejores Precios</h3>
-                                    <p>Compara entre cientos de opciones y encuentra tu mejor oferta.</p>
-                                </div>
-                                <div class="feature">
-                                    <i class="fa-solid fa-shield-halved"></i>
-                                    <h3>Compra Segura</h3>
-                                    <p>Transacciones seguras con asesoramiento profesional.</p>
-                                </div>
-                                <div class="feature">
-                                    <i class="fa-solid fa-tools"></i>
-                                    <h3>Revisión Mecánica</h3>
-                                    <p>Vehículos inspeccionados y listos para conducir.</p>
-                                </div>
-                            </section>
-                        `;
-            } else if (vista === 'vehiculos') {
-                fetch('vehiculos.html')
-                    .then(r => r.text())
-                    .then(html => {
-                        document.getElementById('contenido').innerHTML = html;
-                        let oldScript = document.getElementById('vehiculos-script');
-                        if (oldScript) oldScript.remove();
-                        var script = document.createElement('script');
-                        script.src = 'Scripts/Vehiculos.js';
-                        script.id = 'vehiculos-script';
-                        script.onload = function () {
-                            console.log('Vehiculos.js cargado y ejecutado');
-                        };
-                        document.body.appendChild(script);
-                    });
-            } else if (vista === 'pedidos') {
-                fetch('pedidos.html')
-                    .then(r => r.text())
-                    .then(html => {
-                        document.getElementById('contenido').innerHTML = html;
-                        let oldScript = document.getElementById('pedidos-script');
-                        if (oldScript) oldScript.remove();
-                        var script = document.createElement('script');
-                        script.src = 'Scripts/Pedidos.js';
-                        script.id = 'pedidos-script';
-                        script.onload = function () {
-                            setTimeout(function () {
-                                if (window.cargarVehiculos) {
-                                    window.cargarVehiculos();
-                                } else if (window.PedidosApp && window.PedidosApp.cargarVehiculos) {
-                                    window.PedidosApp.cargarVehiculos();
-                                }
-                            }, 100);
-                        };
-                        document.body.appendChild(script);
-                    });
-            } else if (vista === 'aprobar_pedidos') {
-                fetch('pedidos_aprobar.html')
-                    .then(r => r.text())
-                    .then(html => {
-                        document.getElementById('contenido').innerHTML = html;
-                        let oldScript = document.getElementById('pedidos-aprobar-script');
-                        if (oldScript) oldScript.remove();
-                        var script = document.createElement('script');
-                        script.src = 'Scripts/pedidos_aprobar.js';
-                        script.id = 'pedidos-aprobar-script';
-                        script.onload = function () {
-                            if (window.PedidosAprobarApp && typeof window.PedidosAprobarApp.cargarPedidosPendientes === 'function') {
-                                window.PedidosAprobarApp.cargarPedidosPendientes();
-                            }
-                        };
-                        document.body.appendChild(script);
-                    });
-            } else if (vista === 'facturacion') {
-                fetch('facturacion.html')
-                    .then(r => r.text())
-                    .then(html => {
-                        document.getElementById('contenido').innerHTML = html;
-                        let oldScript = document.getElementById('facturacion-script');
-                        if (oldScript) oldScript.remove();
-                        var script = document.createElement('script');
-                        script.src = 'Scripts/Facturacion.js';
-                        script.id = 'facturacion-script';
-                        document.body.appendChild(script);
-                    });
-            } else if (vista === 'mis_pedidos') {
-                fetch('mis_pedidos.html')
-                    .then(r => r.text())
-                    .then(html => {
-                        document.getElementById('contenido').innerHTML = html;
-                        let oldScript = document.getElementById('mis-pedidos-script');
-                        if (oldScript) oldScript.remove();
-                        var script = document.createElement('script');
-                        script.src = 'Scripts/mis_pedidos.js';
-                        script.id = 'mis-pedidos-script';
-                        document.body.appendChild(script);
-                    });
-            } else if (vista === 'citaTaller') {
-                fetch('citaTaller.html')
-                    .then(r => r.text())
-                    .then(html => {
-                        document.getElementById('contenido').innerHTML = html;
-                        let oldScript = document.getElementById('cita-taller-script');
-                        if (oldScript) oldScript.remove();
-                        const script = document.createElement('script');
-                        script.src = 'Scripts/citaTaller.js';
-                        script.id = 'cita-taller-script';
-                        script.onload = function () {
-                            console.log('citaTaller.js cargado y ejecutado');
-                        };
-                        document.body.appendChild(script)
-                    });
-            } else if (vista === 'perfil') {
-                fetch('perfil.html')
-                    .then(r => r.text())
-                    .then(html => {
-                        document.getElementById('contenido').innerHTML = html;
-                        let oldScript = document.getElementById('perfil-script');
-                        if (oldScript) oldScript.remove();
-                        var script = document.createElement('script');
-                        script.src = 'Scripts/Perfil.js';
-                        script.id = 'perfil-script';
-                        document.body.appendChild(script);
-                    });
-            } else {
-                document.getElementById('contenido').innerHTML = `
-                            <div class="alert alert-secondary">Módulo en construcción (${vista})</div>
-                        `;
-            }
-        }
-    </script>
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        window.onload = function () {
-            const usuario = JSON.parse(sessionStorage.getItem("usuario"));
-            const lblUsuario = document.getElementById("lblUsuario");
-            const btnLogout = document.getElementById("btnLogout");
-            const btnLogin = document.getElementById("btnLogin");
-            if (usuario && usuario.Username) {
-                lblUsuario.textContent = usuario.Username;
-                btnLogout.classList.remove("d-none");
-                btnLogin.classList.add("d-none");
-            } else {
-                lblUsuario.textContent = "Invitado";
-                btnLogout.classList.add("d-none");
-                btnLogin.classList.remove("d-none");
-            }
-            btnLogout.addEventListener("click", () => {
-                sessionStorage.clear();
-                window.location.href = "Login.html";
-            });
-            btnLogin.addEventListener("click", () => {
-                window.location.href = "Login.html";
-            });
-        };
-    </script>
+    <script src="Scripts/Home.js"></script>
 </body>
 </html>
