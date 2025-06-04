@@ -265,6 +265,9 @@
             <a href="#" id="menu-reportes" onclick="cargarVista('reportes', this)">
                 <i class="fa-solid fa-chart-bar"></i> Reportes
             </a>
+            <a href="#" id="menu-cita-taller" onclick="cargarVista('citaTaller', this)">
+                <i class="fa-solid fa-calendar-plus"></i> Cita Taller
+            </a>
             <a href="#" id="menu-perfil" onclick="cargarVista('perfil', this)">
                 <i class="fa-solid fa-user me-2"></i> Mi Perfil
             </a>
@@ -445,6 +448,21 @@
                         script.src = 'Scripts/mis_pedidos.js';
                         script.id = 'mis-pedidos-script';
                         document.body.appendChild(script);
+                    });
+            } else if (vista === 'citaTaller') {
+                fetch('citaTaller.html')
+                    .then(r => r.text())
+                    .then(html => {
+                        document.getElementById('contenido').innerHTML = html;
+                        let oldScript = document.getElementById('cita-taller-script');
+                        if (oldScript) oldScript.remove();
+                        const script = document.createElement('script');
+                        script.src = 'Scripts/citaTaller.js';
+                        script.id = 'cita-taller-script';
+                        script.onload = function () {
+                            console.log('citaTaller.js cargado y ejecutado');
+                        };
+                        document.body.appendChild(script)
                     });
             } else if (vista === 'perfil') {
                 fetch('perfil.html')

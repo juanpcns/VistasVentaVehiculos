@@ -177,7 +177,9 @@
     <Content Include="paginas\Scripts\Pagina2.js" />
     <Content Include="paginas\Scripts\Pedidos.js" />
     <Content Include="paginas\Scripts\Perfil.js" />
+    <Content Include="paginas\Scripts\citaTaller.js" />
     <Content Include="paginas\Scripts\vehiculos.js" />
+    <Content Include="paginas\citaTaller.html" />
     <Content Include="paginas\vehiculos.html" />
     <Content Include="Scripts\adminlte.js" />
     <Content Include="Scripts\adminlte.min.js" />
