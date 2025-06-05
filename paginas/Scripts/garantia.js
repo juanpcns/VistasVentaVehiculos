@@ -20,10 +20,11 @@
             tbody.innerHTML += `
                 <tr>
                     <td>${g.Id}</td>
-                    <td>${g.MarcaNombre && g.ModeloNombre
-                    ? (g.MarcaNombre + ' - ' + g.ModeloNombre + ' (' + g.Año + ')')
-                    : g.CodigoVehiculo
-                }</td>
+                   <td>${
+                g.MarcaNombre && g.ModeloNombre
+                    ? `${g.MarcaNombre} - ${g.ModeloNombre} (${g.Año})`
+                    : g.CodigoVehiculo || g.Codigo}</td>
+
                     <td>${g.NumeroFactura}</td>
                     <td>${(g.FechaInicio || '').substring(0, 10)}</td>
                     <td>${(g.FechaFin || '').substring(0, 10)}</td>

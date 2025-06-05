@@ -20,7 +20,7 @@
                     data.forEach(v => {
                         tbody.innerHTML += `
                         <tr>
-                            <td>${v.Codigo}</td>
+                            <td>${v.Codigo}</td>    
                             <td>${v.MarcaNombre && v.ModeloNombre ? v.MarcaNombre + ' - ' + v.ModeloNombre : '-'}</td>
                             <td>${v.Año}</td>
                             <td>${v.Tipo}</td>

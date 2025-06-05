@@ -1,14 +1,8 @@
 ﻿window.CitasFacturaApp = (function () {
     const API_BASE = 'http://ventavehiculos.runasp.net/api';
     let listaCitas = [];
+    let verFinalizadas = false;
     let modalFinalizar, formFinalizar;
-
-    // Simulación: aquí deberías consultar si el vehículo tiene garantía activa según la cita
-    // Puedes obtenerlo del backend, aquí lo pongo manual (true/false)
-    function tieneGarantiaActiva(cita) {
-        // Reemplaza por tu lógica real (consulta Garantia por CodigoVehiculo, etc)
-        return cita.EstadoGarantia === "Activa"; // O similar
-    }
 
     function mostrarMensaje(msg, error = false) {
         const div = document.getElementById('mensajeFinalizarCita');
@@ -22,16 +16,19 @@
         if (!tbody) return;
         tbody.innerHTML = '';
         if (!listaCitas || listaCitas.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted">No hay citas aprobadas para finalizar</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted">No hay citas para mostrar</td></tr>';
             return;
         }
         listaCitas.forEach(c => {
-            // Solo habilita para citas "Aprobada"
             const esAprobada = c.Estado && c.Estado.toLowerCase() === "aprobada";
+            const esFinalizada = c.Estado && c.Estado.toLowerCase() === "finalizada";
             tbody.innerHTML += `
                 <tr>
                     <td>${c.Id}</td>
-                    <td>${c.DocumentoCliente}</td>
+                    <td>
+                        <span>${c.NombreCompletoCliente || ""}</span><br>
+                        <small class="text-muted">${c.DocumentoCliente || ""}</small>
+                    </td>
                     <td>${c.MarcaNombre && c.ModeloNombre
                     ? (c.MarcaNombre + ' - ' + c.ModeloNombre + ' (' + c.Año + ')')
                     : c.CodigoVehiculo}</td>
@@ -39,10 +36,14 @@
                     <td>${c.Motivo || ''}</td>
                     <td>${c.Estado || ''}</td>
                     <td>
-                        ${esAprobada ? `
-                        <button class="btn btn-primary btn-sm" onclick="CitasFacturaApp.abrirModalFinalizar(${c.Id})">
-                            <i class="fa-solid fa-file-invoice-dollar"></i> Finalizar
-                        </button>
+                        ${esAprobada && !verFinalizadas ? `
+                            <button class="btn btn-primary btn-sm" onclick="CitasFacturaApp.abrirModalFinalizar(${c.Id})">
+                                <i class="fa-solid fa-file-invoice-dollar"></i> Finalizar
+                            </button>
+                        ` : esFinalizada && verFinalizadas ? `
+                            <button class="btn btn-info btn-sm" onclick="CitasFacturaApp.verFactura(${c.Id})">
+                                <i class="fa-solid fa-receipt"></i> Ver factura
+                            </button>
                         ` : `<span class="text-muted">-</span>`}
                     </td>
                 </tr>
@@ -51,11 +52,14 @@
     }
 
     function cargarCitas() {
-        // Suponiendo que tienes un endpoint para obtener citas aprobadas, si no usa ConsultarTodos y filtra aquí
         fetch(`${API_BASE}/CitaTaller/ConsultarTodos`)
             .then(resp => resp.json())
             .then(data => {
-                listaCitas = (data || []).filter(c => c.Estado && c.Estado.toLowerCase() === "aprobada");
+                if (verFinalizadas) {
+                    listaCitas = (data || []).filter(c => c.Estado && c.Estado.toLowerCase() === "finalizada");
+                } else {
+                    listaCitas = (data || []).filter(c => c.Estado && c.Estado.toLowerCase() === "aprobada");
+                }
                 renderizarCitas();
             })
             .catch(e => mostrarMensaje("Error cargando citas: " + (e.message || e), true));
@@ -68,9 +72,8 @@
         document.getElementById('finalizarIdCita').value = idCita;
         document.getElementById('finalizarDescripcionServicio').value = '';
         document.getElementById('finalizarPrecioReparacion').value = '';
-        // Decide si mostrar el campo de precio
-        const garantia = tieneGarantiaActiva(cita);
-        document.getElementById('campoPrecioReparacion').style.display = garantia ? 'none' : 'block';
+        // Si tienes la lógica de garantía, aquí la usas para mostrar/ocultar el precio
+        document.getElementById('campoPrecioReparacion').style.display = 'block';
 
         if (!modalFinalizar) modalFinalizar = new bootstrap.Modal(document.getElementById('modalFinalizarCita'));
         modalFinalizar.show();
@@ -81,18 +84,11 @@
         const idCita = parseInt(document.getElementById('finalizarIdCita').value);
         const descripcionServicio = document.getElementById('finalizarDescripcionServicio').value.trim();
         const precioReparacion = document.getElementById('finalizarPrecioReparacion').value.trim();
-        // Busca la cita para saber si tiene garantía
-        const cita = listaCitas.find(c => c.Id === idCita);
-        const garantia = tieneGarantiaActiva(cita);
 
         let observaciones = "Servicio: " + descripcionServicio;
-        if (!garantia) {
-            if (!precioReparacion || isNaN(precioReparacion) || Number(precioReparacion) < 0)
-                return mostrarMensaje("Debes ingresar el precio de la reparación.", true);
-            observaciones += " | Precio reparación: $" + precioReparacion;
-        } else {
-            observaciones += " | Reparación cubierta por garantía.";
-        }
+        if (!precioReparacion || isNaN(precioReparacion) || Number(precioReparacion) < 0)
+            return mostrarMensaje("Debes ingresar el precio de la reparación.", true);
+        observaciones += " | Precio reparación: $" + precioReparacion;
 
         fetch(`${API_BASE}/CitaTaller/Finalizar/${idCita}`, {
             method: 'POST',
@@ -110,13 +106,81 @@
             .catch(e => mostrarMensaje("Error al guardar servicio: " + (e.message || e), true));
     }
 
+    // -------- Botón para ver la factura de una cita finalizada ----------
+    function verFactura(idCita) {
+        // Aquí puedes pedir al backend la factura por idCita; ejemplo estático:
+        const ejemploFactura = {
+            Numero: 123,
+            Cliente: "Juan Cliente",
+            Vehiculo: "Nissan - March (2025)",
+            Fecha: "2025-06-24",
+            Total: "$2.400.000",
+            Detalles: [
+                { descripcion: "Reparación motor", valor: 1200000 },
+                { descripcion: "Pintura", valor: 800000 },
+                { descripcion: "IVA", valor: 400000 }
+            ]
+        };
+        mostrarModalFactura(ejemploFactura);
+    }
+
+    function mostrarModalFactura(factura) {
+        let html = `
+            <h5>Factura Nº ${factura.Numero}</h5>
+            <p><b>Cliente:</b> ${factura.Cliente}</p>
+            <p><b>Vehículo:</b> ${factura.Vehiculo}</p>
+            <p><b>Fecha:</b> ${factura.Fecha}</p>
+            <table class="table">
+                <thead><tr><th>Concepto</th><th>Valor</th></tr></thead>
+                <tbody>
+                    ${factura.Detalles.map(d =>
+            `<tr><td>${d.descripcion}</td><td>$${d.valor.toLocaleString()}</td></tr>`
+        ).join("")}
+                </tbody>
+                <tfoot>
+                    <tr><td><b>Total</b></td><td><b>${factura.Total}</b></td></tr>
+                </tfoot>
+            </table>
+        `;
+        // Modal dinámico si no existe
+        let modal = document.getElementById("modalFactura");
+        if (!modal) {
+            modal = document.createElement("div");
+            modal.className = "modal fade";
+            modal.id = "modalFactura";
+            modal.tabIndex = -1;
+            modal.innerHTML = `
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Factura</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body" id="facturaBody"></div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+        document.getElementById("facturaBody").innerHTML = html;
+        new bootstrap.Modal(modal).show();
+    }
+
     function inicializar() {
+        document.getElementById("btnVerFinalizadas").onclick = function () {
+            verFinalizadas = true;
+            cargarCitas();
+        };
+        document.getElementById("btnVerAprobadas").onclick = function () {
+            verFinalizadas = false;
+            cargarCitas();
+        };
         cargarCitas();
         formFinalizar = document.getElementById('formFinalizarCita');
         if (formFinalizar) formFinalizar.onsubmit = finalizarCita;
     }
 
-    return { inicializar, abrirModalFinalizar };
+    return { inicializar, abrirModalFinalizar, verFactura };
 })();
 
 document.addEventListener('DOMContentLoaded', CitasFacturaApp.inicializar);

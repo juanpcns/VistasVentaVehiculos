@@ -24,8 +24,12 @@
             tbody.innerHTML += `
                 <tr>
                     <td>${c.Id}</td>
-                    <td>${c.DocumentoCliente}</td>
-                    <td>${c.CodigoVehiculo}</td>
+                    <td>${
+                c.MarcaNombre && c.ModeloNombre
+                    ? `${c.MarcaNombre} - ${c.ModeloNombre} (${c.Año})`
+                    : c.CodigoVehiculo}</td>
+
+                    <td>${c.NombreCompletoCliente}</td>
                     <td>${(c.FechaCita || '').substring(0, 10)}</td>
                     <td>${c.Motivo || ''}</td>
                     <td>${c.Estado || ''}</td>

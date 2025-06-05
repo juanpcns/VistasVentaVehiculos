@@ -3,8 +3,8 @@
     let listaVehiculos = [];
     let listaCitas = [];
 
-    // Cargar vehículos disponibles en el select
-    function cargarVehiculos() {
+    // Cargar vehículos disponibles en el select. Callback para asegurar orden.
+    function cargarVehiculos(callback) {
         fetch(`${API_BASE}/Vehiculo/ListarDisponibles`, {
             headers: { 'Accept': 'application/json' }
         })
@@ -12,16 +12,19 @@
             .then(data => {
                 listaVehiculos = data || [];
                 const select = document.getElementById('inputVehiculo');
-                if (!select) return;
-                select.innerHTML = '<option value="">Seleccione...</option>';
-                listaVehiculos.forEach(v => {
-                    select.innerHTML += `<option value="${v.Codigo}">
-                        ${v.MarcaNombre} - ${v.ModeloNombre} (${v.Año})
-                    </option>`;
-                });
+                if (select) {
+                    select.innerHTML = '<option value="">Seleccione...</option>';
+                    listaVehiculos.forEach(v => {
+                        select.innerHTML += `<option value="${v.Codigo}">
+                            ${v.MarcaNombre} - ${v.ModeloNombre} (${v.Año})
+                        </option>`;
+                    });
+                }
+                if (typeof callback === "function") callback();
             })
             .catch(e => {
                 mostrarMensaje("Error cargando vehículos: " + (e.message || e), true);
+                if (typeof callback === "function") callback();
             });
     }
 
@@ -40,7 +43,7 @@
             });
     }
 
-    // Renderiza la tabla de citas de taller (con ID y nombre de vehículo)
+    // Renderiza la tabla de citas de taller (con nombre completo del cliente)
     function renderizarCitas() {
         const tbody = document.querySelector("#tablaCitas tbody");
         if (!tbody) return;
@@ -54,21 +57,21 @@
             tbody.innerHTML += `
                 <tr>
                     <td>${c.Id}</td>
-                    <td>${c.DocumentoCliente}</td>
-                    <td>${c.CodigoVehiculo}</td>
                     <td>
-                        ${vehiculo
-                    ? (vehiculo.MarcaNombre + " - " + vehiculo.ModeloNombre + " (" + vehiculo.Año + ")")
-                    : c.CodigoVehiculo}
+                        <span>${c.NombreCompletoCliente}</span><br>
+                        <small class="text-muted">${c.DocumentoCliente}</small>
+                    </td>
+                    <td>
+                        ${c.CodigoVehiculo} - ${c.MarcaNombre} - ${c.ModeloNombre} (${c.Año})
                     </td>
                     <td>${(c.FechaCita || '').substring(0, 10)}</td>
                     <td>${c.Motivo || ''}</td>
                     <td>${c.Estado || ''}</td>
-                    <td>${c.Observaciones || ''}</td>
+                    <td>${c.Observaciones || '-'}</td>
                     <td>
                         ${c.Estado === 'Pendiente'
-                    ? `<button class="btn btn-danger btn-sm" onclick="CitaTallerApp.cancelarCita(${c.Id})"><i class="fa-solid fa-xmark"></i> Cancelar</button>`
-                    : '<span class="text-muted">N/A</span>'}
+                                ? `<button class="btn btn-danger btn-sm" onclick="CitaTallerApp.cancelarCita(${c.Id})"><i class="fa-solid fa-xmark"></i> Cancelar</button>`
+                                : '<span class="text-muted">N/A</span>'}
                     </td>
                 </tr>
             `;
@@ -103,7 +106,7 @@
             FechaCita: fecha,
             Motivo: motivo,
             Estado: "Pendiente",
-            Observaciones: ""
+            Observaciones: "-"
         };
 
         fetch(`${API_BASE}/CitaTaller/Insertar`, {
@@ -150,8 +153,10 @@
 function inicializarCitaTaller() {
     console.log("[CitaTaller] Inicializando...");
     if (window.CitaTallerApp) {
-        window.CitaTallerApp.cargarVehiculos();
-        window.CitaTallerApp.cargarCitas();
+        // ATENCIÓN: Cargar vehículos y SOLO cuando estén listos, cargar las citas:
+        window.CitaTallerApp.cargarVehiculos(() => {
+            window.CitaTallerApp.cargarCitas();
+        });
     }
     const form = document.getElementById('formNuevaCita');
     if (form) {
@@ -189,5 +194,3 @@ function inicializarCitaTaller() {
 
 // Si cargas la página directamente, también inicializa
 document.addEventListener('DOMContentLoaded', inicializarCitaTaller);
-
-// En tu SPA, llama a inicializarCitaTaller() explícitamente desde cargarVista si es necesario
