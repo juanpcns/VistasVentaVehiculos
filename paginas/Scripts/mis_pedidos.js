@@ -102,16 +102,55 @@
         bsToast.show();
     }
 
+    // ---- Lógica para roles y documento automático (sin modificar modelos/backend) ----
+    function inicializarVistaMisPedidos() {
+        const usuario = JSON.parse(sessionStorage.getItem("usuario") || "{}");
+        let perfil = usuario.Perfil ? usuario.Perfil.toLowerCase() : "";
+        const inputDoc = document.getElementById('inputDocumento');
+        const btnBuscar = document.querySelector('form button[type="submit"]');
+
+        if (perfil === "cliente") {
+            // Consulta el documento desde el backend usando el username
+            fetch(`http://ventavehiculos.runasp.net/api/Usuario/ObtenerDocumentoPorUsername/${usuario.Usuario}`)
+                .then(resp => resp.ok ? resp.text() : "")
+                .then(documento => {
+                    if (inputDoc) {
+                        inputDoc.value = documento.replace(/^"(.*)"$/, '$1');
+                        inputDoc.readOnly = true;
+                    }
+                    if (btnBuscar) {
+                        btnBuscar.disabled = true;
+                    }
+                    // Solo consulta pedidos después de tener el documento
+                    consultarPedidos();
+                });
+        } else {
+            if (inputDoc) {
+                inputDoc.readOnly = false;
+                inputDoc.value = "";
+            }
+            if (btnBuscar) {
+                btnBuscar.disabled = false;
+            }
+        }
+    }
+
+    // Exponer la inicialización para llamarla desde fuera
     return {
         consultarPedidos,
         verDetallePedido,
-        cancelarPedido
+        cancelarPedido,
+        inicializarVistaMisPedidos
     };
 })();
 
+// --- Inicialización de la vista ---
 window.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById("formBuscarMisPedidos");
     if (form) {
         form.onsubmit = MisPedidosApp.consultarPedidos;
+    }
+    if (window.MisPedidosApp && typeof window.MisPedidosApp.inicializarVistaMisPedidos === "function") {
+        window.MisPedidosApp.inicializarVistaMisPedidos();
     }
 });

@@ -1,4 +1,4 @@
-﻿<div class="d-flex justify-content-between align-items-center mb-4">
+﻿﻿<div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="fw-bold mb-0"><i class="fa-solid fa-car-side me-2"></i>Gestión de Vehículos</h2>
     <button class="btn btn-primary" onclick="VehiculosApp.mostrarModalVehiculo()">
         <i class="fa-solid fa-plus me-1"></i> Agregar Vehículo
@@ -8,8 +8,7 @@
     <table class="table table-hover align-middle" id="tablaVehiculos">
         <thead class="table-light">
             <tr>
-                <th>Código</th>
-                <th>IdModelo</th>
+                <th>Id Vehiculo</th>
                 <th>Modelo</th>
                 <th>Año</th>
                 <th>Tipo</th>
@@ -35,9 +34,22 @@
             </div>
             <div class="modal-body">
                 <input type="hidden" id="vehiculoCodigo">
+
+                <!-- Selección de Marca -->
                 <div class="mb-3">
-                    <label class="form-label">IdModelo</label>
-                    <input type="number" class="form-control" id="vehiculoModelo" required>
+                    <label class="form-label">Marca</label>
+                    <select class="form-select" id="vehiculoMarca" required>
+                        <option value="">Seleccione una marca</option>
+                        <!-- Se llena dinámicamente -->
+                    </select>
+                </div>
+                <!-- Selección de Modelo -->
+                <div class="mb-3">
+                    <label class="form-label">Modelo</label>
+                    <select class="form-select" id="vehiculoModelo" required disabled>
+                        <option value="">Seleccione un modelo</option>
+                        <!-- Se llena dinámicamente -->
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Año</label>

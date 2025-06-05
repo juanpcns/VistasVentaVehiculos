@@ -20,7 +20,10 @@
             tbody.innerHTML += `
                 <tr>
                     <td>${g.Id}</td>
-                    <td>${g.CodigoVehiculo}</td>
+                    <td>${g.MarcaNombre && g.ModeloNombre
+                    ? (g.MarcaNombre + ' - ' + g.ModeloNombre + ' (' + g.Año + ')')
+                    : g.CodigoVehiculo
+                }</td>
                     <td>${g.NumeroFactura}</td>
                     <td>${(g.FechaInicio || '').substring(0, 10)}</td>
                     <td>${(g.FechaFin || '').substring(0, 10)}</td>
@@ -117,3 +120,5 @@
 
     return { inicializar };
 })();
+
+document.addEventListener('DOMContentLoaded', GarantiaApp.inicializar);

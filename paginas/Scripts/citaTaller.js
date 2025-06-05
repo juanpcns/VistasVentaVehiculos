@@ -15,7 +15,9 @@
                 if (!select) return;
                 select.innerHTML = '<option value="">Seleccione...</option>';
                 listaVehiculos.forEach(v => {
-                    select.innerHTML += `<option value="${v.Codigo}">${v.Codigo} - ${v.Tipo} (${v.Año})</option>`;
+                    select.innerHTML += `<option value="${v.Codigo}">
+                        ${v.MarcaNombre} - ${v.ModeloNombre} (${v.Año})
+                    </option>`;
                 });
             })
             .catch(e => {
@@ -38,7 +40,7 @@
             });
     }
 
-    // Renderiza la tabla de citas de taller
+    // Renderiza la tabla de citas de taller (con ID y nombre de vehículo)
     function renderizarCitas() {
         const tbody = document.querySelector("#tablaCitas tbody");
         if (!tbody) return;
@@ -53,14 +55,19 @@
                 <tr>
                     <td>${c.Id}</td>
                     <td>${c.DocumentoCliente}</td>
-                    <td>${vehiculo ? (vehiculo.Tipo + ' (' + vehiculo.Año + ')') : c.CodigoVehiculo}</td>
+                    <td>${c.CodigoVehiculo}</td>
+                    <td>
+                        ${vehiculo
+                    ? (vehiculo.MarcaNombre + " - " + vehiculo.ModeloNombre + " (" + vehiculo.Año + ")")
+                    : c.CodigoVehiculo}
+                    </td>
                     <td>${(c.FechaCita || '').substring(0, 10)}</td>
                     <td>${c.Motivo || ''}</td>
                     <td>${c.Estado || ''}</td>
                     <td>${c.Observaciones || ''}</td>
                     <td>
-                        ${c.Estado === 'Pendiente' ?
-                    `<button class="btn btn-danger btn-sm" onclick="CitaTallerApp.cancelarCita(${c.Id})"><i class="fa-solid fa-xmark"></i> Cancelar</button>`
+                        ${c.Estado === 'Pendiente'
+                    ? `<button class="btn btn-danger btn-sm" onclick="CitaTallerApp.cancelarCita(${c.Id})"><i class="fa-solid fa-xmark"></i> Cancelar</button>`
                     : '<span class="text-muted">N/A</span>'}
                     </td>
                 </tr>
@@ -79,7 +86,6 @@
     // Enviar formulario para nueva cita
     function guardarCita(event) {
         if (event) event.preventDefault();
-        console.log("Intentando guardar cita..."); // Para depuración
 
         const documento = document.getElementById('inputDocumento').value.trim();
         const codigoVehiculo = parseInt(document.getElementById('inputVehiculo').value);
@@ -140,10 +146,9 @@
 
 })();
 
-
 // --- Inicialización flexible para carga dinámica de vistas (SPA y carga directa) ---
 function inicializarCitaTaller() {
-    console.log("Inicializando cita taller...");
+    console.log("[CitaTaller] Inicializando...");
     if (window.CitaTallerApp) {
         window.CitaTallerApp.cargarVehiculos();
         window.CitaTallerApp.cargarCitas();
@@ -157,9 +162,32 @@ function inicializarCitaTaller() {
             }
         });
     }
+
+    // --- Autocompletar documento de cliente si es cliente ---
+    const usuario = JSON.parse(sessionStorage.getItem("usuario") || "{}");
+    const perfil = (usuario.Perfil || usuario.perfil || "").toLowerCase();
+    const username = usuario.Usuario || usuario.Username || usuario.usuario || "";
+    console.log("[CitaTaller] Perfil detectado:", perfil);
+    console.log("[CitaTaller] Username detectado:", username);
+
+    if (perfil === "cliente" && username) {
+        console.log("[CitaTaller] Es cliente, autocompletando documento...");
+        fetch(`http://ventavehiculos.runasp.net/api/Usuario/ObtenerDocumentoPorUsername/${username}`)
+            .then(resp => resp.ok ? resp.text() : "")
+            .then(documento => {
+                console.log("[CitaTaller] Documento recibido:", documento);
+                const inputDoc = document.getElementById('inputDocumento');
+                if (inputDoc) {
+                    inputDoc.value = documento.replace(/^"(.*)"$/, '$1');
+                    inputDoc.readOnly = true;
+                }
+            });
+    } else {
+        console.log("[CitaTaller] No es cliente o falta username, no autocompleta documento");
+    }
 }
 
-// Si cargas la página directamente, también inicializa (opcional)
+// Si cargas la página directamente, también inicializa
 document.addEventListener('DOMContentLoaded', inicializarCitaTaller);
 
-// En tu SPA, llama a inicializarCitaTaller() explícitamente desde cargarVista
+// En tu SPA, llama a inicializarCitaTaller() explícitamente desde cargarVista si es necesario

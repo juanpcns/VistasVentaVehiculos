@@ -9,13 +9,15 @@
 <body>
     <div class="container py-4">
         <h2 class="fw-bold mb-4"><i class="fa-solid fa-clipboard-list"></i> Mis Pedidos</h2>
-        <form class="row g-3 mb-3" onsubmit="MisPedidosApp.consultarPedidos(event)">
+        <form class="row g-3 mb-3" id="formBuscarMisPedidos" onsubmit="MisPedidosApp.consultarPedidos(event)">
             <div class="col-md-4">
                 <label class="form-label">Documento del Cliente</label>
                 <input type="text" class="form-control" id="inputDocumento" required>
             </div>
             <div class="col-md-2 d-flex align-items-end">
-                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-search"></i> Consultar</button>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa-solid fa-search"></i> Consultar
+                </button>
             </div>
         </form>
         <div class="table-responsive">
@@ -50,6 +52,18 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast para mensajes -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100">
+        <div id="toastMisPedidos" class="toast align-items-center text-white border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body" id="toastMisPedidosBody">
+                    <!-- Mensaje dinámico -->
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Cerrar"></button>
             </div>
         </div>
     </div>

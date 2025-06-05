@@ -119,6 +119,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="paginas\citas_aprobar.html" />
+    <Content Include="paginas\citas_factura.html" />
     <Content Include="paginas\Estilos\adminlte.css" />
     <Content Include="paginas\Estilos\adminlte.min.css" />
     <Content Include="paginas\Estilos\all.min.css" />
@@ -162,27 +163,19 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="paginas\Login.html" />
-    <Content Include="paginas\Menu.html" />
-    <Content Include="paginas\MenuLateral.html" />
     <Content Include="paginas\mis_pedidos.html" />
-    <Content Include="paginas\Pagina1.html" />
-    <Content Include="paginas\Pagina2.html" />
-    <Content Include="paginas\PaginaBase.html" />
     <Content Include="paginas\Pedidos.html" />
     <Content Include="paginas\pedidos_aprobar.html" />
     <Content Include="paginas\perfil.html" />
     <Content Include="paginas\Scripts\citas_aprobar.js" />
+    <Content Include="paginas\Scripts\citas_factura.js" />
     <Content Include="paginas\Scripts\Comunes\Comunes.js" />
     <Content Include="paginas\Scripts\Comunes\CRUD.js" />
     <Content Include="paginas\Scripts\facturacion.js" />
     <Content Include="paginas\Scripts\garantia.js" />
     <Content Include="paginas\Scripts\Login.js" />
     <Content Include="paginas\Scripts\Home.js" />
-    <Content Include="paginas\Scripts\Menu.js" />
-    <Content Include="paginas\Scripts\MenuLateral.js" />
     <Content Include="paginas\Scripts\mis_pedidos.js" />
-    <Content Include="paginas\Scripts\Pagina1.js" />
-    <Content Include="paginas\Scripts\Pagina2.js" />
     <Content Include="paginas\Scripts\Pedidos.js" />
     <Content Include="paginas\Scripts\Perfil.js" />
     <Content Include="paginas\Scripts\citaTaller.js" />

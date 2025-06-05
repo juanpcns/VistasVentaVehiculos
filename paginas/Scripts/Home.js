@@ -68,16 +68,24 @@ function cargarVista(vista, link) {
                 script.id = 'pedidos-script';
                 script.onload = function () {
                     setTimeout(function () {
+                        // Cargar los vehículos (como antes)
                         if (window.cargarVehiculos) {
                             window.cargarVehiculos();
                         } else if (window.PedidosApp && window.PedidosApp.cargarVehiculos) {
                             window.PedidosApp.cargarVehiculos();
                         }
+                        // ---- NUEVO: autocompletar documento cliente ----
+                        if (window.PedidosApp && typeof window.PedidosApp.autocompletarDocumentoCliente === "function") {
+                            window.PedidosApp.autocompletarDocumentoCliente();
+                            console.log("[Pedidos] Se llamó a autocompletarDocumentoCliente");
+                        } else {
+                            console.log("[Pedidos] La función autocompletarDocumentoCliente NO está disponible");
+                        }
                     }, 100);
                 };
                 document.body.appendChild(script);
             });
-    } else if (vista === 'pedidos_aprobar') {
+} else if (vista === 'pedidos_aprobar') {
         fetch('pedidos_aprobar.html')
             .then(r => r.text())
             .then(html => {
@@ -187,9 +195,27 @@ function cargarVista(vista, link) {
                 document.body.appendChild(script);
             });
     }
+    else if (vista === 'citas_factura') {
+        fetch('citas_factura.html')
+            .then(r => r.text())
+            .then(html => {
+                document.getElementById('contenido').innerHTML = html;
+                let oldScript = document.getElementById('citas-factura-script');
+                if (oldScript) oldScript.remove();
+                var script = document.createElement('script');
+                script.src = 'Scripts/citas_factura.js';
+                script.id = 'citas-factura-script';
+                script.onload = function () {
+                    if (window.CitasFacturaApp && typeof window.CitasFacturaApp.inicializar === 'function') {
+                        window.CitasFacturaApp.inicializar();
+                    }
+                };
+                document.body.appendChild(script);
+            });
+    }
 
 
-     else {
+    else {
         document.getElementById('contenido').innerHTML = `
             <div class="alert alert-secondary">Módulo en construcción (${vista})</div>
         `;

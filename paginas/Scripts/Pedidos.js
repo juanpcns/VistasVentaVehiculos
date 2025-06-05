@@ -3,7 +3,26 @@
     let carrito = [];
     let listaVehiculos = [];
 
-    // Hace global esta función para que el home pueda llamarla después de cargar el JS
+    // -------------- AUTOCOMPLETAR DOCUMENTO DEL CLIENTE --------------
+    function autocompletarDocumentoCliente() {
+        const usuario = JSON.parse(sessionStorage.getItem("usuario") || "{}");
+        const username = usuario.Usuario || usuario.Username || "";
+
+        if (username) {
+            fetch(`${API_BASE}/Usuario/ObtenerDocumentoPorUsername/${encodeURIComponent(username)}`)
+                .then(resp => resp.ok ? resp.text() : "")
+                .then(documento => {
+                    const inputDoc = document.getElementById('pedidoDocumentoCliente');
+                    if (documento && inputDoc) {
+                        // Quita comillas si vienen del backend como string JSON
+                        inputDoc.value = documento.replace(/^"(.*)"$/, '$1');
+                        inputDoc.readOnly = true; // Para que no lo pueda editar el usuario
+                    }
+                });
+        }
+    }
+
+    // ----------- Cargar vehículos y llenar el <select> -----------
     function cargarVehiculos() {
         fetch(`${API_BASE}/Vehiculo/ListarDisponibles`, {
             headers: { 'Accept': 'application/json' }
@@ -15,7 +34,9 @@
                 if (!select) return;
                 select.innerHTML = '<option value="">Seleccione...</option>';
                 listaVehiculos.forEach(v => {
-                    select.innerHTML += `<option value="${v.Codigo}">${v.Codigo} - ${v.Tipo} (${v.Año}) - $${v.ValorUnitario}</option>`;
+                    select.innerHTML += `<option value="${v.Codigo}">
+                        ${v.MarcaNombre} - ${v.ModeloNombre} (${v.Año}) - $${v.ValorUnitario}
+                    </option>`;
                 });
             });
     }
@@ -51,7 +72,7 @@
         if (!tbody) return;
         tbody.innerHTML = '';
         if (carrito.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">Agregue vehículos al carrito</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">Agregue vehículos al carrito</td></tr>';
             return;
         }
         carrito.forEach((item, idx) => {
@@ -59,7 +80,8 @@
             tbody.innerHTML += `
                 <tr>
                     <td>${idx + 1}</td>
-                    <td>${vehiculo ? vehiculo.Tipo + ' (' + vehiculo.Año + ')' : item.CodigoVehiculo}</td>
+                    <td>${vehiculo ? (vehiculo.MarcaNombre + ' - ' + vehiculo.ModeloNombre + ' (' + vehiculo.Año + ')') : item.CodigoVehiculo}</td>
+                    <td>${vehiculo ? '$' + vehiculo.ValorUnitario : '-'}</td>
                     <td>${item.Cantidad}</td>
                     <td>
                         <button class="btn btn-danger btn-sm" onclick="PedidosApp.eliminarDeCarrito(${idx})">
@@ -72,7 +94,6 @@
     }
 
     function limpiarFormulario() {
-        document.getElementById('pedidoDocumentoCliente').value = '';
         document.getElementById('pedidoObservaciones').value = '';
         document.getElementById('selectVehiculo').selectedIndex = 0;
         document.getElementById('inputCantidad').value = 1;
@@ -85,7 +106,7 @@
         const documento = document.getElementById('pedidoDocumentoCliente').value.trim();
         const observaciones = document.getElementById('pedidoObservaciones').value.trim();
         if (!documento) {
-            alert("Ingrese el documento del cliente.");
+            alert("No se pudo detectar el documento del cliente.");
             return;
         }
         if (carrito.length === 0) {
@@ -120,12 +141,13 @@
             });
     }
 
-    // Expone funciones que necesita el HTML
+    // --- Expone funciones para uso externo ---
     return {
         agregarAlCarrito,
         eliminarDeCarrito,
         guardarPedido,
-        cargarVehiculos // Exportada para el home
+        cargarVehiculos,
+        autocompletarDocumentoCliente
     };
 })();
 
