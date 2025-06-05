@@ -118,6 +118,8 @@
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="paginas\citas_aprobar.html" />
+    <Content Include="paginas\citas_factura.html" />
     <Content Include="paginas\Estilos\adminlte.css" />
     <Content Include="paginas\Estilos\adminlte.min.css" />
     <Content Include="paginas\Estilos\all.min.css" />
@@ -127,6 +129,7 @@
     <Content Include="paginas\Estilos\css\all.min.css" />
     <Content Include="paginas\Estilos\css\brands.css" />
     <Content Include="paginas\Estilos\css\brands.min.css" />
+    <Content Include="paginas\Estilos\css\estilos.css" />
     <Content Include="paginas\Estilos\css\fontawesome.css" />
     <Content Include="paginas\Estilos\css\fontawesome.min.css" />
     <Content Include="paginas\Estilos\css\regular.css" />
@@ -155,6 +158,7 @@
     <Content Include="paginas\Estilos\webfonts\fa-regular-400.svg" />
     <Content Include="paginas\Estilos\webfonts\fa-solid-900.svg" />
     <Content Include="paginas\facturacion.html" />
+    <Content Include="paginas\garantia.html" />
     <Content Include="paginas\Home.html" />
     <Content Include="paginas\Login.html" />
     <Content Include="paginas\Menu.html" />
@@ -166,10 +170,14 @@
     <Content Include="paginas\Pedidos.html" />
     <Content Include="paginas\pedidos_aprobar.html" />
     <Content Include="paginas\perfil.html" />
+    <Content Include="paginas\Scripts\citas_aprobar.js" />
+    <Content Include="paginas\Scripts\citas_factura.js" />
     <Content Include="paginas\Scripts\Comunes\Comunes.js" />
     <Content Include="paginas\Scripts\Comunes\CRUD.js" />
     <Content Include="paginas\Scripts\facturacion.js" />
+    <Content Include="paginas\Scripts\garantia.js" />
     <Content Include="paginas\Scripts\Login.js" />
+    <Content Include="paginas\Scripts\Home.js" />
     <Content Include="paginas\Scripts\Menu.js" />
     <Content Include="paginas\Scripts\MenuLateral.js" />
     <Content Include="paginas\Scripts\mis_pedidos.js" />

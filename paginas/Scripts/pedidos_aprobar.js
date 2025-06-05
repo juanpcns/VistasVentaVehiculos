@@ -59,7 +59,7 @@
 
     function verDetallePedido(id, docCliente, fecha, observaciones, estado) {
         let html = `
-            <strong>ID Pedido:</strong> ${id}<br>
+            <strong>ID Factura:</strong> ${id}<br>
             <strong>Documento Cliente:</strong> ${docCliente}<br>
             <strong>Fecha de Pedido:</strong> ${fecha ? new Date(fecha).toLocaleString() : '-'}<br>
             <strong>Estado:</strong> ${estado}<br>

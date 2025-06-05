@@ -3,7 +3,7 @@
     let carrito = [];
     let listaVehiculos = [];
 
-    // Hace global esta función para que el home pueda llamarla después de cargar el JS
+    // Cargar vehículos y llenar el <select>
     function cargarVehiculos() {
         fetch(`${API_BASE}/Vehiculo/ListarDisponibles`, {
             headers: { 'Accept': 'application/json' }
@@ -15,7 +15,9 @@
                 if (!select) return;
                 select.innerHTML = '<option value="">Seleccione...</option>';
                 listaVehiculos.forEach(v => {
-                    select.innerHTML += `<option value="${v.Codigo}">${v.Codigo} - ${v.Tipo} (${v.Año}) - $${v.ValorUnitario}</option>`;
+                    select.innerHTML += `<option value="${v.Codigo}">
+                        ${v.MarcaNombre} - ${v.ModeloNombre} (${v.Año}) - $${v.ValorUnitario}
+                    </option>`;
                 });
             });
     }
@@ -51,7 +53,7 @@
         if (!tbody) return;
         tbody.innerHTML = '';
         if (carrito.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">Agregue vehículos al carrito</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">Agregue vehículos al carrito</td></tr>';
             return;
         }
         carrito.forEach((item, idx) => {
@@ -59,7 +61,8 @@
             tbody.innerHTML += `
                 <tr>
                     <td>${idx + 1}</td>
-                    <td>${vehiculo ? vehiculo.Tipo + ' (' + vehiculo.Año + ')' : item.CodigoVehiculo}</td>
+                    <td>${vehiculo ? (vehiculo.MarcaNombre + ' - ' + vehiculo.ModeloNombre + ' (' + vehiculo.Año + ')') : item.CodigoVehiculo}</td>
+                    <td>${vehiculo ? '$' + vehiculo.ValorUnitario : '-'}</td>
                     <td>${item.Cantidad}</td>
                     <td>
                         <button class="btn btn-danger btn-sm" onclick="PedidosApp.eliminarDeCarrito(${idx})">
@@ -120,7 +123,7 @@
             });
     }
 
-    // Expone funciones que necesita el HTML
+    // Expone funciones necesarias para el HTML
     return {
         agregarAlCarrito,
         eliminarDeCarrito,

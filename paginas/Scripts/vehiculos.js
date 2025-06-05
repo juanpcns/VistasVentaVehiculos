@@ -1,6 +1,8 @@
 ﻿window.VehiculosApp = (function () {
     const API_BASE = 'http://ventavehiculos.runasp.net/api';
     let modoEdicion = false; // true = editar, false = registrar
+    let listaModelos = [];
+    let listaMarcas = [];
 
     function cargarVehiculos() {
         fetch(`${API_BASE}/Vehiculo/ListarDisponibles`, {
@@ -19,8 +21,9 @@
                         tbody.innerHTML += `
                         <tr>
                             <td>${v.Codigo}</td>
-                            <td>${v.IdModelo}</td>
-                            <td>-</td>
+
+                            <td>${v.MarcaNombre && v.ModeloNombre ? v.MarcaNombre + ' - ' + v.ModeloNombre : '-'}</td>
+
                             <td>${v.Año}</td>
                             <td>${v.Tipo}</td>
                             <td>${v.ValorUnitario}</td>
@@ -36,13 +39,13 @@
                     `;
                     });
                 } else {
-                    tbody.innerHTML = '<tr><td colspan="10">No hay vehículos disponibles.</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="9">No hay vehículos disponibles.</td></tr>';
                 }
             })
             .catch(e => {
                 const tbody = document.querySelector('#tablaVehiculos tbody');
                 if (tbody)
-                    tbody.innerHTML = '<tr><td colspan="10">Error cargando vehículos</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="9">Error cargando vehículos</td></tr>';
             });
     }
 
@@ -57,6 +60,7 @@
         document.getElementById('vehiculoOrigen').value = vehiculo?.Origen || '';
         document.getElementById('vehiculoCondicion').value = vehiculo?.Condicion || 'Nuevo';
 
+        // Edición solo permite cambiar estado y valor
         document.getElementById('vehiculoModelo').readOnly = modoEdicion;
         document.getElementById('vehiculoAnio').readOnly = modoEdicion;
         document.getElementById('vehiculoTipo').readOnly = modoEdicion;
