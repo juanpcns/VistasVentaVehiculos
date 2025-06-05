@@ -11,7 +11,11 @@ namespace VistasVentaVehiculos
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+        
+           Response.Redirect("~/paginas/Home.html", true);
+        
 
-        }
     }
+
+}
 }

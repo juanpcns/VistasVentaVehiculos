@@ -119,7 +119,10 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="paginas\citas_aprobar.html" />
+<<<<<<< HEAD
     <Content Include="paginas\citas_factura.html" />
+=======
+>>>>>>> 7d5ea417eaa4dd217178cd55db1d64c6d887ab91
     <Content Include="paginas\Estilos\adminlte.css" />
     <Content Include="paginas\Estilos\adminlte.min.css" />
     <Content Include="paginas\Estilos\all.min.css" />
@@ -159,7 +162,13 @@
     <Content Include="paginas\Estilos\webfonts\fa-solid-900.svg" />
     <Content Include="paginas\facturacion.html" />
     <Content Include="paginas\garantia.html" />
+<<<<<<< HEAD
     <Content Include="paginas\Home.html" />
+=======
+    <Content Include="paginas\Home.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+>>>>>>> 7d5ea417eaa4dd217178cd55db1d64c6d887ab91
     <Content Include="paginas\Login.html" />
     <Content Include="paginas\Menu.html" />
     <Content Include="paginas\MenuLateral.html" />
@@ -171,7 +180,10 @@
     <Content Include="paginas\pedidos_aprobar.html" />
     <Content Include="paginas\perfil.html" />
     <Content Include="paginas\Scripts\citas_aprobar.js" />
+<<<<<<< HEAD
     <Content Include="paginas\Scripts\citas_factura.js" />
+=======
+>>>>>>> 7d5ea417eaa4dd217178cd55db1d64c6d887ab91
     <Content Include="paginas\Scripts\Comunes\Comunes.js" />
     <Content Include="paginas\Scripts\Comunes\CRUD.js" />
     <Content Include="paginas\Scripts\facturacion.js" />
@@ -236,6 +248,7 @@
     <Content Include="Scripts\adminlte.js.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
+    <None Include="Properties\PublishProfiles\site27915-WebDeploy.pubxml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\dataTables.bootstrap4.js" />
     <Content Include="Scripts\dataTables.bootstrap4.min.js" />
