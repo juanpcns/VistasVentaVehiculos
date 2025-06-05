@@ -18,9 +18,14 @@
                     data.forEach(v => {
                         tbody.innerHTML += `
                         <tr>
+<<<<<<< Updated upstream
                             <td>${v.Codigo}</td>
                             <td>${v.IdModelo}</td>
                             <td>-</td>
+=======
+                            <td>${v.Codigo}</td>    
+                            <td>${v.MarcaNombre && v.ModeloNombre ? v.MarcaNombre + ' - ' + v.ModeloNombre : '-'}</td>
+>>>>>>> Stashed changes
                             <td>${v.Año}</td>
                             <td>${v.Tipo}</td>
                             <td>${v.ValorUnitario}</td>
