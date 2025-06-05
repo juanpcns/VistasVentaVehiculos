@@ -1,56 +1,50 @@
-﻿async function Ingresar() {
-    let BaseURL = "http://ventavehiculos.runasp.net";
-    let URL = BaseURL + "/api/login/Ingresar";
-    const login = new Login($("#txtUsername").val(), $("#txtClave").val());
+﻿document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("loginForm");
+    const mensaje = document.getElementById("dvMensaje");
 
-    let Respuesta = null;
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        mensaje.className = "";
+        mensaje.textContent = "";
 
-    try {
-        Respuesta = await EjecutarComandoServicioRpta("POST", URL, login);
-    } catch (error) {
-        Respuesta = null;
-    }
+        const usuario = document.getElementById("txtUsername").value.trim();
+        const clave = document.getElementById("txtClave").value.trim();
 
-    // Manejo si la respuesta es un array (según tu backend, corrígelo si es necesario)
-    if (Respuesta && Array.isArray(Respuesta)) {
-        Respuesta = Respuesta[0];
-    }
+        if (!usuario || !clave) {
+            mensaje.className = "text-danger";
+            mensaje.textContent = "Debes ingresar usuario y clave.";
+            return;
+        }
 
-    if (!Respuesta) {
-        $("#dvMensaje")
-            .removeClass("alert-success")
-            .addClass("alert alert-danger")
-            .html("No se pudo conectar con el servicio.");
-        return;
-    }
-
-    if (Respuesta.Autenticado === true) {
-        // Login exitoso
-        $("#dvMensaje")
-            .removeClass("alert-danger")
-            .addClass("alert alert-success")
-            .html("Bienvenido, " + (Respuesta.Username || "") + "!");
-
-        // Guardar datos del usuario (opcional)
-        sessionStorage.setItem("usuario", JSON.stringify(Respuesta));
-
-        // Redirigir al Home
-        setTimeout(() => {
-            window.location.href = "Home.html";
-        }, 1000);
-
-    } else {
-        // Login fallido (credenciales inválidas, etc.)
-        $("#dvMensaje")
-            .removeClass("alert-success")
-            .addClass("alert alert-danger")
-            .html(Respuesta.Mensaje || "Usuario o clave inválidos.");
-    }
-}
-
-class Login {
-    constructor(Username, Clave) {
-        this.Username = Username;
-        this.Clave = Clave;
-    }
-}
+        // Aquí cambia la URL a la de tu API si es diferente
+        fetch("http://ventavehiculos.runasp.net/api/login/Ingresar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                Usuario: usuario,
+                Clave: clave
+            })
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.Autenticado) {
+                    // Guarda el usuario en sessionStorage
+                    sessionStorage.setItem("usuario", JSON.stringify(data));
+                    mensaje.className = "text-success";
+                    mensaje.textContent = "Bienvenido, redirigiendo...";
+                    setTimeout(() => {
+                        window.location.href = "Home.html";
+                    }, 900);
+                } else {
+                    mensaje.className = "text-danger";
+                    mensaje.textContent = data.Mensaje || "Usuario o clave incorrectos.";
+                }
+            })
+            .catch(() => {
+                mensaje.className = "text-danger";
+                mensaje.textContent = "Error conectando al servidor. Intenta más tarde.";
+            });
+    });
+});

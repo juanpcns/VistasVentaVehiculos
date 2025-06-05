@@ -9,6 +9,11 @@
     <link href="Estilos/css/estilos.css" rel="stylesheet" />
 </head>
 <body>
+    <script>
+        if (!sessionStorage.getItem("usuario")) {
+            window.location.href = "Login.html";
+        }
+    </script>
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="sidebar-header">
