@@ -227,7 +227,7 @@ window.onload = function () {
     const lblUsuario = document.getElementById("lblUsuario");
     const btnLogout = document.getElementById("btnLogout");
 
-    // Valida ambos campos (Username o Usuario) para evitar ciclo infinito de Login
+    // Validación de login
     if (!usuario || (!usuario.Username && !usuario.Usuario)) {
         window.location.href = "Login.html";
         return;
@@ -235,18 +235,67 @@ window.onload = function () {
 
     lblUsuario.textContent = (usuario.Username || usuario.Usuario) + " - " + (usuario.Perfil || usuario.perfil || "");
 
-    // Restricciones por perfil (robusto para cualquier mayúscula/minúscula)
-    const perfil = usuario.Perfil || usuario.perfil || "";
-    if (perfil === "Cliente") {
-        ["menu-aprobar-pedidos", "menu-facturacion", "menu-usuarios", "menu-reportes"].forEach(id => ocultarMenu(id));
-    } else if (perfil === "Vendedor") {
-        ["menu-aprobar-pedidos", "menu-usuarios", "menu-reportes"].forEach(id => ocultarMenu(id));
+    // ---- Lógica de restricción de menús ----
+    const menus = [
+        "menu-inicio",
+        "menu-vehiculos",
+        "menu-ventas",
+        "menu-aprobar-pedidos",
+        "menu-mis-pedidos",
+        "menu-taller",
+        "menu-garantia",
+        "menu-citas-aprobar",   // Aprobar Garantía
+        "menu-citas-factura",   // Facturar Cita
+        "menu-usuarios",
+        "menu-perfil"
+    ];
+
+    // Oculta todos los menús primero
+    menus.forEach(id => ocultarMenu(id));
+
+    // Siempre muestra "Inicio" y "Mi Perfil"
+    mostrarMenu("menu-inicio");
+    mostrarMenu("menu-perfil");
+
+    // Ahora muestra según el perfil
+    const perfil = (usuario.Perfil || usuario.perfil || "").toLowerCase();
+
+    if (perfil === "administrador") {
+        // Muestra todo
+        menus.forEach(id => mostrarMenu(id));
+    } else if (perfil === "vendedor") {
+        // inicio, vehiculos, ventas, aprobar pedidos, mis pedidos, mi perfil
+        mostrarMenu("menu-inicio");
+        mostrarMenu("menu-vehiculos");
+        mostrarMenu("menu-ventas");
+        mostrarMenu("menu-aprobar-pedidos");
+        mostrarMenu("menu-mis-pedidos");
+        mostrarMenu("menu-perfil");
+    } else if (perfil === "taller") {
+        // inicio, garantias, aprobar garantía, facturar cita, mi perfil
+        mostrarMenu("menu-inicio");
+        mostrarMenu("menu-garantia");
+        mostrarMenu("menu-citas-aprobar");
+        mostrarMenu("menu-citas-factura");
+        mostrarMenu("menu-perfil");
+    } else if (perfil === "cliente") {
+        // Puedes mantener la lógica previa o personalizar aquí si quieres
+        mostrarMenu("menu-inicio");
+        mostrarMenu("menu-vehiculos");
+        mostrarMenu("menu-ventas");
+        mostrarMenu("menu-mis-pedidos");
+        mostrarMenu("menu-taller");
+        mostrarMenu("menu-garantia");
+        mostrarMenu("menu-perfil");
     }
-    // Administrador ve todo
 
     function ocultarMenu(id) {
         const el = document.getElementById(id);
         if (el) el.style.display = "none";
+    }
+    function mostrarMenu(id) {
+        const el = document.getElementById(id);
+        if (el) el.style.display = "";
     }
 
     btnLogout.addEventListener("click", () => {
